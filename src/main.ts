@@ -80,10 +80,24 @@ if (downloads.length) {
     const link = document.createElement('a');
     link.className = entry.primary ? 'button' : 'text-link';
     link.href = safeUrl(entry.url)!;
-    link.textContent = `${entry.label} ↗`;
+    link.append(`${entry.label} `);
+    const arrow = document.createElement('span');
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.textContent = '↓';
+    link.append(arrow);
     $('#release-actions').append(link);
   }
-  $('#release-note').textContent = `Version ${release.version} · Windows x64 · Unsigned build`;
+  const note = $('#release-note');
+  note.textContent = `Version ${release.version} · Windows 10 and 11, x64 · Unsigned, so SmartScreen asks once`;
+  if (safeUrl(release.notesUrl)) {
+    const notes = document.createElement('a');
+    notes.href = safeUrl(release.notesUrl)!;
+    notes.textContent = 'Release notes and SHA-256';
+    note.append(' · ', notes);
+  }
+} else {
+  $('#release-actions').replaceChildren(Object.assign(document.createElement('p'), { className: 'release-pending', textContent: 'Public download links are being prepared.' }));
+  $('#release-note').textContent = 'Windows x64 · Local-first · Pearl & Midnight';
 }
 if (safeUrl(release.repositoryUrl)) {
   const link = document.createElement('a');

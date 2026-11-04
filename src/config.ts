@@ -2,8 +2,9 @@
 // Never point these at local release/ paths: Windows executables belong in GitHub Releases.
 export const release = {
   version: '2.1.0',
-  setupUrl: '',
-  portableUrl: '',
+  setupUrl: 'https://github.com/iksamxul/Kobra/releases/download/v2.1.0/Kobra-Setup-2.1.0.exe',
+  portableUrl: 'https://github.com/iksamxul/Kobra/releases/download/v2.1.0/Kobra-Portable-2.1.0.exe',
+  notesUrl: 'https://github.com/iksamxul/Kobra/releases/tag/v2.1.0',
   repositoryUrl: 'https://github.com/iksamxul/Kobra',
 };
 

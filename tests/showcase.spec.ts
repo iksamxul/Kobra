@@ -49,6 +49,10 @@ for (const theme of ['light', 'dark'] as const) {
       await expect(page.locator('#moment-status')).toContainText('Preview:');
       await page.locator('.save-moment').click();
       await expect(page.locator('.save-moment')).toHaveAttribute('aria-pressed', 'false');
+      // Downloads point at the published GitHub Release.
+      await expect(page.locator('#release-actions a').first()).toHaveAttribute('href', 'https://github.com/iksamxul/Kobra/releases/download/v2.1.0/Kobra-Setup-2.1.0.exe');
+      await expect(page.locator('#release-actions a').nth(1)).toHaveAttribute('href', 'https://github.com/iksamxul/Kobra/releases/download/v2.1.0/Kobra-Portable-2.1.0.exe');
+      await expect(page.locator('#release-note a')).toHaveAttribute('href', 'https://github.com/iksamxul/Kobra/releases/tag/v2.1.0');
       await page.locator('summary').first().click();
       await expect(page.locator('details').first()).toHaveAttribute('open', '');
       const broken = await page.evaluate(async () => {
@@ -136,6 +140,7 @@ test('content and navigation work without JavaScript', async ({ browser }) => {
   for (const step of await page.locator('.story-step').all()) await expect(step).toBeVisible();
   for (const step of await page.locator('.editor-step').all()) await expect(step).toBeVisible();
   await expect(page.locator('.folder-file').first()).toHaveCSS('opacity', '1');
+  await expect(page.getByRole('link', { name: /Download for Windows/ })).toHaveAttribute('href', /Kobra-Setup-2\.1\.0\.exe$/);
   await page.getByRole('link', { name: /Meet Kobra/ }).click();
   await expect(page.locator('#download-title')).toBeInViewport();
   await context.close();

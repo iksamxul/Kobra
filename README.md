@@ -57,7 +57,7 @@ Development and preview default to `http://127.0.0.1:4173`. When working in the 
 
 ## Downloads
 
-Fill `setupUrl` and `portableUrl` in `src/config.ts` with the real public **HTTPS GitHub Release asset URLs**. Empty URLs show an honest “Public download links are being prepared” message. No fake download buttons or local paths are published. Do not add large Windows executables to this website repository.
+Version 2.1.0 is published at https://github.com/iksamxul/Kobra/releases/tag/v2.1.0, and `setupUrl`, `portableUrl` and `notesUrl` in `src/config.ts` point at it; the same links are written into `index.html` so they work without JavaScript. For a new release, upload the verified installers to a new GitHub Release and update both places. Empty URLs show an honest “Public download links are being prepared” message. No fake download buttons or local paths are published. Do not add large Windows executables to this website repository.
 
 The application identifies itself as 2.1.0. Every feature on the page is in that build and covered by its tests: the seven Kobra additions and the Editor have their own smoke checks, and an optional networked render check confirms the Editor's MP4 export (a two-video edit renders to a playable 1280×720 MP4). Verify a new app release before changing claims or download URLs.
 
