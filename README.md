@@ -16,11 +16,11 @@ npm ci
 npm run dev        # http://127.0.0.1:4173 (add --port to change it)
 npm run build      # tsc + vite build into dist/
 npm run preview
-npm run screens    # captures -> responsive WebP screens and crops
+npm run screens    # captures/ (4320x2700) -> WebP screens and crops; never upscales or forces an aspect
 npm run film       # sample-film stills (needs ffmpeg and the desktop app's public/ folder)
 ```
 
-Browser checks: `npx playwright install chromium`, then `npm run verify`. On Windows with Edge installed, set `SHOWCASE_BROWSER=msedge`. The suite covers five widths in both themes (static layout, every working preview, image loading, no horizontal overflow), the full motion path (WebGL hero, each scroll story, theme persistence), the WebGL fallback, the no-JavaScript page, keyboard use and the release links. Section screenshots for review: `node tests/capture.mjs http://127.0.0.1:4173/ 1440 dark` writes to ignored `review/sections/`. Scroll cost: `node tests/perf.mjs http://127.0.0.1:4173/` scrolls the whole page in Edge and reports frame-time percentiles and any long animation frames.
+Browser checks: `npx playwright install chromium`, then `npm run verify`. On Windows with Edge installed, set `SHOWCASE_BROWSER=msedge`. The suite covers five widths in both themes (static layout, every working preview, image loading, no horizontal overflow), the full motion path (WebGL hero, each scroll story, theme persistence), the WebGL fallback, the no-JavaScript page, keyboard use and the release links. Section screenshots for review: `node tests/capture.mjs http://127.0.0.1:4173/ 1440 dark` writes to ignored `review/sections/`. Scroll cost: `node tests/perf.mjs http://127.0.0.1:4173/` scrolls the whole page in Edge and reports frame-time percentiles and any long animation frames. Image quality: `node tests/image-audit.mjs http://127.0.0.1:4173/` checks every image at 1440@2x, 1920@1x, 1024@2x and 390@3x and fails if one is drawn larger than its pixels, stretched or cropped (rules in `public/assets/screens/MANIFEST.md`).
 
 ## The page
 

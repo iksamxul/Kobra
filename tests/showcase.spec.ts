@@ -121,7 +121,7 @@ test('motion: 3D hero, scroll stories, keyboard, theme persistence and credits',
   // Hero: the headline lifts, the camera moves in until the screen covers the viewport.
   await scrollToProgress(page, '#top', .6);
   await expect.poll(() => cssVar(page, '#top', '--copy-out')).toBe(1);
-  await expect.poll(() => deviceGrowth(page)).toBeGreaterThan(1.2);
+  await expect.poll(() => deviceGrowth(page)).toBeGreaterThan(1.02);
   await page.screenshot({ path: 'review/screenshots/motion-hero-dolly.png' });
   await scrollToProgress(page, '#top', 1);
   await expect.poll(() => cssVar(page, '#top', '--caption')).toBeGreaterThan(.99);
@@ -184,7 +184,7 @@ test('the CSS display still tells the story when WebGL is unavailable', async ({
   await expect(page.locator('.hero-fallback')).toHaveCSS('opacity', '1');
   await expect(page.locator('#hero-stage canvas')).toHaveCount(0);
   await scrollToProgress(page, '#top', .9);
-  await expect.poll(() => deviceGrowth(page)).toBeGreaterThan(1.2);
+  await expect.poll(() => deviceGrowth(page)).toBeGreaterThan(1.02);
   await expect(page.locator('.device')).toHaveCSS('opacity', '1');
   await page.locator('#download').scrollIntoViewIfNeeded();
   await expect(page.locator('#emblem-stage')).toHaveAttribute('data-renderer', 'fallback');

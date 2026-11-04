@@ -6,7 +6,7 @@ import type { Framing, HeroScene } from './scene';
 // present, and the fallback without WebGL) and the WebGL display, so they agree exactly:
 //   0.00-0.20  headline lifts away
 //   0.00-0.34  the display rises to the centre and turns to face you
-//   0.36-0.82  the camera moves in until the screen covers the viewport
+//   0.36-0.82  the camera moves in until the entire screen fits the viewport
 //   0.80-0.86  the crisp HTML screenshot takes over from the WebGL texture
 //   0.86-0.95  everything but the video dims and a caption settles; then the page moves on
 // Where the video sits inside the Watch capture (fractions of the screen), for the spotlight.
@@ -40,7 +40,8 @@ export function initHero(currentTheme: () => Theme) {
     const screenH = rest * screen.offsetHeight / device.offsetWidth;
     const copyBottom = copy.offsetTop + copy.offsetHeight;
     const startTop = Math.max(copyBottom + 40, vh * .52);
-    framing = { vw, vh, imgW, startDy: startTop + screenH / 2 - vh / 2, cover: Math.max(vw / imgW, vh / imgH) * 1.002 };
+    const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header')) || 60;
+    framing = { vw, vh, imgW, startDy: startTop + screenH / 2 - vh / 2, cover: Math.min(vw * .94 / imgW, (vh - 2 * header - 100) / imgH) };
     hero.style.setProperty('--device-w', `${(rest * framing.cover).toFixed(2)}px`);
     webgl?.setFraming(framing);
     // At full cover the screen is centred at imgW x imgH times cover.
