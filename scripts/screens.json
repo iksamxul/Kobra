@@ -1,0 +1,171 @@
+{
+  "about": "Screens and crops the site needs. Boxes are [x, y, width, height] in a 1920x1200 reference frame of the 1440x900 capture layout and scale with the capture, so the same box works for 1920x1200 and 2880x1800 captures. Crop sizes are the 1x CSS size; a 2x file is written too. See public/assets/screens/MANIFEST.md.",
+  "reference": [
+    1920,
+    1200
+  ],
+  "interim": "../review/modes",
+  "sources": {
+    "watch-dark": "dark-wide-kobra-09-watch.png",
+    "watch-light": "light-wide-kobra-09-watch.png",
+    "home-dark": "dark-wide-kobra-12-home-continue.png",
+    "home-light": "light-wide-kobra-12-home-continue.png",
+    "upnext-dark": "dark-wide-kobra-23-up-next.png",
+    "upnext-light": "light-wide-kobra-23-up-next.png",
+    "transcript-dark": "dark-wide-kobra-27-transcript.png",
+    "transcript-light": "light-wide-kobra-27-transcript.png",
+    "tools-dark": "dark-wide-kobra-11-tools-video.png",
+    "tools-light": "light-wide-kobra-11-tools-video.png",
+    "countdown-dark": "dark-wide-kobra-28-up-next-countdown.png",
+    "countdown-light": "light-wide-kobra-28-up-next-countdown.png",
+    "studio-media-dark": "dark-wide-studio-13-media-studio.png",
+    "studio-media-light": "light-wide-studio-13-media-studio.png",
+    "studio-editor-dark": "dark-wide-studio-16-editor.png",
+    "studio-editor-light": "light-wide-studio-16-editor.png"
+  },
+  "screens": [
+    "watch-dark",
+    "watch-light",
+    "home-dark",
+    "home-light",
+    "upnext-dark",
+    "upnext-light",
+    "studio-media-dark",
+    "studio-media-light",
+    "featurebar-watch-dark",
+    "featurebar-watch-light",
+    "featurebar-clips-dark",
+    "featurebar-clips-light",
+    "featurebar-convert-dark",
+    "featurebar-convert-light",
+    "featurebar-scenes-dark",
+    "featurebar-scenes-light",
+    "featurebar-listen-dark",
+    "featurebar-listen-light",
+    "featurebar-insights-dark",
+    "featurebar-insights-light"
+  ],
+  "crops": {
+    "everyday-home": {
+      "from": "home",
+      "box": [
+        227,
+        147,
+        1013,
+        760
+      ],
+      "size": [
+        760,
+        570
+      ]
+    },
+    "everyday-watch": {
+      "from": "watch",
+      "box": [
+        347,
+        227,
+        1227,
+        920
+      ],
+      "size": [
+        760,
+        570
+      ]
+    },
+    "everyday-myvideos": {
+      "from": "upnext",
+      "box": [
+        27,
+        133,
+        1333,
+        1000
+      ],
+      "size": [
+        760,
+        570
+      ]
+    },
+    "everyday-transcript": {
+      "from": "transcript",
+      "box": [
+        885,
+        133,
+        1013,
+        760
+      ],
+      "size": [
+        760,
+        570
+      ]
+    },
+    "everyday-tools": {
+      "from": "tools",
+      "box": [
+        213,
+        267,
+        1013,
+        760
+      ],
+      "size": [
+        760,
+        570
+      ]
+    },
+    "kobra-countdown": {
+      "from": "countdown",
+      "box": [
+        1280,
+        547,
+        640,
+        320
+      ],
+      "size": [
+        480,
+        240
+      ]
+    },
+    "kobra-transcript": {
+      "from": "transcript",
+      "box": [
+        1500,
+        140,
+        399,
+        459
+      ],
+      "size": [
+        339,
+        390
+      ]
+    },
+    "studio-timeline": {
+      "from": "studio-editor",
+      "box": [
+        21,
+        704,
+        1333,
+        439
+      ],
+      "size": [
+        760,
+        250
+      ]
+    },
+    "studio-tabs": {
+      "from": "studio-media",
+      "box": [
+        24,
+        57,
+        1493,
+        55
+      ],
+      "size": [
+        1120,
+        41
+      ]
+    }
+  },
+  "themes": [
+    "dark",
+    "light"
+  ]
+}

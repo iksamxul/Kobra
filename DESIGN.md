@@ -2,50 +2,39 @@
 
 ## Visual intent
 
-**Editorial calm, dimensional product.** The webpage should feel related to Kobra before someone reads the name: grayscale surfaces, translucent navigation, crisp fine borders, softly rounded windows, and the app's own K mark.
+**Editorial calm, dimensional product.** The page should feel related to Kobra before anyone reads the name: neutral surfaces, translucent glass, hairline borders, generous radii and the app's own K mark. The reference is an Apple product page in craft and pacing, in Kobra's language rather than Apple's branding.
 
-- Pearl: `#f5f5f7` canvas, white cards, near-black typography, silver borders.
-- Midnight: `#111113` canvas, `#1c1c1f` cards, off-white typography, graphite borders.
-- One strong action at a time. Avoid neon, rainbow backgrounds, dense badge walls and fake usage metrics.
-- Headlines are deliberately large and tightly tracked; supporting copy is concise and human.
-- The media itself may have color. The interface around it stays neutral.
+- Pearl: `#f5f5f7` canvas, white cards, near-black ink, silver hairlines.
+- Midnight: `#111113` canvas, `#1c1c1f` cards, off-white ink, graphite lines. The Editor section is always Midnight, like the app's dark workspaces.
+- Glass follows the app's tokens (`studio.css`): translucent fill, white edge, a 125° reflection gradient, 18 px radius.
+- Selection is the app's segmented control: a field track with a soft solid pill. One filled primary action per view.
+- Headlines are large and tightly tracked (`Segoe UI Variable Display` on Windows, the system face elsewhere); captions are tiny, uppercase and letter-spaced.
+- Colour comes only from the films and screens. No neon, no gradients for their own sake, no fake metrics or testimonials. Illustrated panels are labeled as illustrations.
 
 ## Page sequence
 
-| Section | Job | Motion / interaction |
+| Section | Job | Motion |
 |---|---|---|
-| Header | Brand, page navigation, appearance, get Kobra | Frosted sticky surface, reading-progress hairline, underline / press feedback |
-| Hero | Establish the quiet-player idea | Staggered type entry; floating procedural display rotates slightly with scroll and pointer |
-| Introduction | Explain the value in human language | One-time text reveals; no count-up metrics |
-| Scroll story | Connect watching, practical tools and Studio | Three native-scroll stages; screen perspective and copy crossfade; progress dashes |
-| Two modes | Show the actual app difference | Clickable Kobra / Studio segmented control; screenshots and copy switch together |
-| Details | Make small tools feel tangible | Waveform expands on hover, subtitle indicator responds, explicit bookmark preview, layered Pearl/Midnight cards |
-| Local-first | Communicate ownership and calm | Quiet lock illustration and text reveal |
-| FAQ | Answer actual product questions | Native details/summary disclosure with rotating plus |
-| Get Kobra | One clear next step | Real configurable release links, or honest availability message |
+| Header | Brand, sections, appearance, Get Kobra | Frosted glass, reading-progress hairline, sliding nav pill (hover and scroll spy), magnetic button |
+| Hero | The quiet-player idea, the product as an object | Pinned 240vh: headline lifts; display turns and rises; camera moves into the screen; HTML handoff; spotlight on the video and caption |
+| Statement | What Kobra is, in one paragraph | Pinned: words brighten with scroll |
+| Everyday | Home, Watch, My videos, Transcript, Tools | Sticky glass frame crossfades between crops (≥900 px) |
+| Feature bar | The six new tabs | Pinned horizontal gallery; tab pill follows; panel micro-animations only on the active panel |
+| Try it | Working previews of real behavior | Card tilt and glare, sliding segmented pill, countdown ring, transcript follow |
+| Appearance | Pearl and Midnight | Pinned: clip-path frame opens, Midnight wipes across |
+| Two modes | Kobra and Kobra Studio | Switch swaps a stack of screens; layers drift at three depths |
+| Editor | The new Editor | Pinned CSS 3D: layers explode, razor/ripple/transition, sequence shapes, export; keyframe demo |
+| Local-first | Ownership and calm | Mask-line reveal, lock tile settles |
+| Questions, Download | Answers and one next step | Disclosure, 3D emblem, real release links |
 
 ## Motion rules
 
-- Use scroll position, not accumulated wheel deltas. The user owns scrolling.
-- No smooth-scroll library, scroll interception, autoplay video or infinite floating animation.
-- Render Three.js only while settling toward a target or reacting to scroll/pointer input.
-- Keep pointer motion small enough that the screen remains readable.
-- The scene is paused offscreen and when the document is hidden.
-- Reduced motion gets a static product image and all three story paragraphs in normal flow.
-- Content is present in semantic HTML and remains usable without JavaScript.
+- Use scroll position, never accumulated wheel deltas. No smooth-scroll library, no scroll interception, no autoplaying video, no idle animation loops.
+- Pinned layouts and hidden initial states exist only under `html.motion`. Reduced motion and no-JavaScript get a static page with every step present.
+- Transforms, opacity and custom properties only; one rAF loop reads all rectangles, then writes.
+- Three.js renders on demand, pauses offscreen and in hidden tabs, caps DPR at 2 and hands off to crisp HTML once the screen fills the viewport.
+- Interactive previews start once when first seen, never loop, and stop when touched.
 
-## Model and assets
+## Models and assets
 
-The hero is a procedural metallic display with rounded chassis, dark bezel, screen texture and a small power button. It is an abstract product presentation, not a replica of branded hardware. All asset URLs are local and work under the GitHub Pages project path.
-
-The first implementation uses full real-app screenshots for fidelity. A later pass can replace them with carefully staged screenshots, keeping corresponding images updated in both the HTML fallback and the WebGL screen texture.
-
-## Useful future enhancements
-
-1. Original sculpted K mark / glass emblem, rather than third-party hardware.
-2. A restrained exploded-interface sequence tying glass layers to the app's actual UI.
-3. Higher-quality app captures without upgrade hints and with release-verified content.
-4. One purposeful short demo, only if there is a source clip and explicit playback control.
-5. Updated social preview composed from the final hero and typography.
-
-Keep any new feature optional for low-power devices and do not turn the entire page into a WebGL canvas.
+The hero display (shell, glass, screen, sheen, hinge, neck, foot, contact shadow) and the K emblem are procedural Three.js geometry. Screens are responsive WebP pairs from `scripts/screens.py`; see `public/assets/screens/MANIFEST.md` for every image and the captures still to come.

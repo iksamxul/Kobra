@@ -1,9 +1,69 @@
-/* No scroll hijacking. Transforms and opacity only; content remains usable without JS. */
-.button,.theme-toggle,.mode-controls button,.save-moment{transition:transform .24s ease,background .24s ease,box-shadow .24s ease,color .24s ease}
-.button:hover{transform:translateY(-2px);box-shadow:0 7px 18px #0002}.button:active,.save-moment:active{transform:scale(.97)}.theme-toggle:hover{background:var(--line);transform:rotate(30deg)}
-.nav-links a::after{content:"";position:absolute;bottom:7px;left:0;width:100%;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}.nav-links a:hover::after{transform:scaleX(1)}.text-link>span{transition:transform .25s ease}.text-link:hover>span{transform:translate(3px,-2px)}
-.motion-enabled .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}.motion-enabled .reveal.is-visible{opacity:1;transform:none}
-.hero-enter{animation:hero-enter .9s cubic-bezier(.2,.7,.2,1) both}.hero-enter:nth-child(2){animation-delay:.08s}.hero-enter:nth-child(3){animation-delay:.16s}.hero-enter:nth-child(4){animation-delay:.24s}@keyframes hero-enter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.story-step{transition:opacity .45s ease,transform .55s ease,visibility .45s}.story-dots span{transition:width .45s ease,background .45s ease}.story-screen img,.mode-images img{transition:opacity .55s ease}.story-screen{will-change:transform}.moment-frame,.mini-window{transition:transform .7s cubic-bezier(.2,.7,.2,1)}.moment-saved{transition:opacity .35s ease}.moment-demo.is-saved .moment-saved{opacity:1}.moment-demo.is-saved .moment-frame{transform:rotate(0) translateY(-3px)}.moment-demo.is-saved .save-moment{background:var(--contrast);color:var(--on-contrast)}
-.waveform i{transition:transform .7s ease,opacity .7s ease;transition-delay:calc(var(--i)*6ms)}.sound-card:hover .waveform i{transform:scaleY(1);opacity:1}.subtitle-ticks b{transition:transform .6s ease}.subtitle-card:hover .subtitle-ticks b{transform:scaleY(1.25)}.appearance-card:hover .mini-pearl{transform:rotateY(-5deg) rotateZ(-11deg) translateX(-8px)}.appearance-card:hover .mini-midnight{transform:rotateY(-5deg) rotateZ(11deg) translateX(8px)}summary>span{transition:transform .25s ease}
-@media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.motion-enabled .reveal{opacity:1;transform:none}.hero-fallback{transform:none}.scroll-story{min-height:0!important}.story-sticky{position:relative!important;top:auto!important;height:auto!important;min-height:0!important;padding-block:70px;align-items:start}.story-steps{min-height:0!important}.story-step{position:relative!important;inset:auto;opacity:1!important;visibility:visible!important;transform:none!important;margin-bottom:36px}.story-dots{display:none}.story-screen{transform:none!important;will-change:auto}.story-screen img:not(:first-child){display:none}.story-screen img:first-child{opacity:1!important}.hero-stage canvas{display:none}.hero-stage.is-ready .hero-fallback{opacity:1}.button:hover{transform:none}.mini-window,.moment-frame{transition:none!important}}
+/* Micro-interactions and reveals. The user owns scrolling: nothing here intercepts wheel
+   or touch. Transforms and opacity only. Initial hidden states exist only under .motion,
+   so the page is complete without JavaScript or with reduced motion. */
+
+/* Hover, press and toggle feedback. */
+.button{transition:transform .5s var(--ease),box-shadow .3s ease,background .3s ease;transform:translate3d(var(--mx,0px),var(--my,0px),0)}
+.button>span:first-child{display:inline-block;transition:transform .5s var(--ease);transform:translate3d(calc(var(--mx,0px) * .45),calc(var(--my,0px) * .45),0)}
+.button:hover{box-shadow:0 10px 24px -10px rgba(0,0,0,.45)}
+.button:active{transform:translate3d(var(--mx,0px),var(--my,0px),0) scale(.97)}
+.button.is-magnetic{transition:transform .12s linear,box-shadow .3s ease}
+.button.is-magnetic>span:first-child{transition:transform .12s linear}
+.text-link>span{transition:transform .35s var(--ease)}
+.text-link:hover>span{transform:translate(2px,2px)}
+.back-to-top:hover>span{transform:translateY(-3px)}
+.theme-toggle,.theme-toggle .sun,.theme-toggle .rays,.theme-toggle .moon{transition:transform .6s var(--ease),opacity .4s ease,background .3s ease}
+.theme-toggle:active{transform:scale(.9)}
+.nav-indicator{transition:transform .45s var(--ease),width .45s var(--ease),opacity .3s ease}
+.seg-thumb{transition:transform .45s var(--ease),width .45s var(--ease),opacity .3s ease}
+.segmented>button:active,.segmented>a:active,.pill:active,.save-moment:active,.kf-play:active{transform:scale(.96)}
+.segmented>button,.segmented>a,.pill,.save-moment,.kf-play{transition:transform .2s ease,color .3s ease,background .3s ease}
+summary>span{transition:transform .35s var(--ease),background .3s ease}
+summary:hover>span{background:var(--field)}
+.fb-tabs a svg{transition:transform .4s var(--ease)}
+.fb-tabs a:hover svg{transform:translateY(-1px) scale(1.06)}
+.stack-set{transition:opacity .6s ease,visibility .6s}
+.stack-set .stack-card,.stack-set .stack-strip{transition:transform .9s var(--ease),opacity .6s ease}
+.stack-set .stack-card:nth-of-type(3){transition-delay:.06s}
+
+/* Card tilt with a specular glare that follows the pointer (--tx/--ty in -1..1). */
+.tilt{transform:perspective(1100px) rotateX(calc(var(--ty,0) * -3.2deg)) rotateY(calc(var(--tx,0) * 4deg)) translateZ(0);transition:transform .7s var(--ease),box-shadow .5s ease}
+.tilt.is-tilting{transition:transform .14s linear,box-shadow .5s ease}
+.tilt::after{content:"";position:absolute;inset:0;z-index:5;border-radius:inherit;background:radial-gradient(520px circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.55),transparent 42%);mix-blend-mode:soft-light;opacity:0;transition:opacity .5s ease;pointer-events:none}
+[data-theme=dark] .tilt::after{background:radial-gradient(520px circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.13),transparent 42%);mix-blend-mode:normal}
+.tilt.is-tilting::after{opacity:1}
+.tilt.is-tilting{box-shadow:var(--shadow-2)}
+
+/* Entrance: the headline settles in line by line, then the rest follows. */
+.motion .hero-line{animation:line-in 1.1s var(--ease) both}
+.motion .hero-line+.hero-line{animation-delay:.09s}
+.motion .hero-in{animation:fade-up 1s var(--ease) both;animation-delay:.22s}
+.motion .hero-actions{animation-delay:.32s}
+.motion .site-header{animation:fade-down .8s var(--ease) both}
+@keyframes line-in{from{opacity:0;transform:translateY(.32em);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes fade-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fade-down{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:none}}
+
+/* Reveals on first sight. */
+.motion .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform 1.1s var(--ease)}
+.motion .reveal.is-visible{opacity:1;transform:none}
+.motion .lines>span{opacity:0;transform:translateY(.45em);transition:opacity .9s ease,transform 1.1s var(--ease)}
+.motion .lines>span+span{transition-delay:.1s}
+.motion .lines.is-visible>span{opacity:1;transform:none}
+/* Mask reveal: each line rises out of its own clipped box, scrubbed by scroll (--m). */
+.mask-lines>span{overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.mask-lines>span>span{display:block}
+.motion .mask-lines>span>span{transform:translate3d(0,calc((1 - clamp(0,var(--m,0) * 3 - var(--i,0),1)) * 105%),0)}
+.motion .private-mark{transform:scale(calc(.7 + var(--m,0) * .3)) rotate(calc((1 - var(--m,0)) * -24deg));opacity:clamp(0,calc(var(--m,0) * 2),1)}
+
+/* Theme switch: Midnight or Pearl spreads from the toggle as a circle (View Transitions). */
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+.theme-reveal::view-transition-new(root){animation:theme-reveal .6s var(--ease-io)}
+@keyframes theme-reveal{from{clip-path:circle(0 at var(--vt-x,100%) var(--vt-y,0))}to{clip-path:circle(var(--vt-r,150vmax) at var(--vt-x,100%) var(--vt-y,0))}}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  .tilt,.button,.button>span:first-child{transform:none!important}
+  .hero-stage canvas,.emblem-stage canvas{display:none}
+  .emblem-stage.is-ready .download-icon{opacity:1}
+}

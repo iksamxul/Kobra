@@ -1,6 +1,6 @@
 # Kobra — the showcase
 
-A standalone, Apple-inspired product website for Kobra. The visual language comes from the app: monochrome Pearl/Midnight, soft glass, restrained borders and content-first layouts.
+A standalone product website for Kobra in the app's own visual language: monochrome Pearl/Midnight, soft glass, hairline borders, large tightly tracked type, colour only from the media. Scroll-driven 3D and motion, built on native scrolling.
 
 **Site:** https://iksamxul.github.io/Kobra/  
 **Repository:** https://github.com/iksamxul/Kobra
@@ -9,76 +9,86 @@ This repository contains the website, not the desktop application's source or in
 
 ## Develop
 
-Requires Node.js 22 and npm.
+Requires Node.js 22 and npm. Python 3 with Pillow is only needed to regenerate images.
 
 ```sh
 npm ci
-npm run dev
-npm run build
+npm run dev        # http://127.0.0.1:4173 (add --port to change it)
+npm run build      # tsc + vite build into dist/
 npm run preview
+npm run screens    # captures -> responsive WebP screens and crops
+npm run film       # sample-film stills (needs ffmpeg and the desktop app's public/ folder)
 ```
 
-Browser checks: `npx playwright install chromium`, then `npm run verify`. On Windows with Edge already installed, set `SHOWCASE_BROWSER=msedge` to use it instead. Tests exercise five widths in both themes, mode/appearance interactions, reduced motion, 3D scroll stages, WebGL fallback, keyboard navigation and the no-JavaScript page. Screenshots are written to ignored `review/screenshots/`.
+Browser checks: `npx playwright install chromium`, then `npm run verify`. On Windows with Edge installed, set `SHOWCASE_BROWSER=msedge`. The suite covers five widths in both themes (static layout, every working preview, image loading, no horizontal overflow), the full motion path (WebGL hero, each scroll story, theme persistence), the WebGL fallback, the no-JavaScript page, keyboard use and the release links. Section screenshots for review: `node tests/capture.mjs http://127.0.0.1:4173/ 1440 dark` writes to ignored `review/sections/`. Scroll cost: `node tests/perf.mjs http://127.0.0.1:4173/` scrolls the whole page in Edge and reports frame-time percentiles and any long animation frames.
 
-Development and preview default to `http://127.0.0.1:4173`. When working in the desktop project, run these commands from its `showcase/` directory. The website has its own dependencies and build.
+## The page
 
-## What's here
+| Section | What moves |
+|---|---|
+| Hero | Pinned. A procedural aluminium display (Three.js) turns to face you and rises; the camera moves in until the screen covers the viewport; the HTML screenshot takes over; everything but the video dims under a caption. Without WebGL the CSS display does the same. |
+| Statement | Pinned. Words brighten one by one with scroll. |
+| Everyday | A list of five features beside a sticky glass frame that crossfades between tight crops (wide screens). |
+| Feature bar | Pinned. Vertical scroll moves a gallery of six panels sideways; a segmented tab bar follows and can jump to a panel. |
+| Try it | Working previews: Up next countdown, picture modes (the app's own factors), transcript, moments, open folder, history. Cards tilt with a glare. |
+| Appearance | Pinned. The frame opens (clip-path), then Midnight wipes across Pearl. |
+| Two modes | Kobra / Kobra Studio switch; each stack of screens drifts at different depths. |
+| Editor | Pinned, CSS 3D. Monitors and a multi-track timeline; the program monitor explodes into its layers; razor, ripple delete and a transition; the sequence changes shape and exports. Then an interactive keyframe demo and the capability grid. |
+| Local-first, questions, download | Lines rise out of masks; the 3D K emblem; real release links. |
 
-- Responsive product story, substantial real-app visuals, feature cards, FAQ and release section.
-- Pearl/Midnight toggle with remembered preference.
-- Procedural Three.js display with metallic chassis, real screenshot texture, scroll rotation and subtle pointer response.
-- Lazy WebGL loading; HTML image fallback on reduced motion or unsupported WebGL.
-- Native-scroll, three-stage sticky sequence with synchronized text and screenshots.
-- Interactive Kobra/Studio preview, bookmark demonstration, reveal animations and hover/press feedback.
-- "Kobra, expanded": the My videos panel, plus working previews of Up next (cancellable countdown), picture modes (the app's exact filter factors), transcript, open folder and history.
-- Editor sequence: an exploded glass stack where clips gather from Segments, Moments and Shots into one timeline, the playhead splits a clip, and the outputs (MP4, SRT, EDL, chapters, Projects, Delivery) appear. Scroll position alone drives it.
-- 3D Kobra emblem in the download section, extruded from the logo's own path with studio reflections; it rises and turns with scroll.
-- Reduced-motion layout that presents every story step without requiring scrolling through a pinned animation.
-- Self-hosted images, system fonts, semantic content and keyboard-accessible controls.
-- GitHub Pages workflow; pull requests build without deploying.
+Micro-interactions: magnetic primary buttons, a sliding nav indicator that follows hover and the section you are reading, sliding segmented thumbs, an animated appearance icon and a circular appearance reveal (View Transitions), focus rings throughout.
 
 ## Structure
 
 | Path | Purpose |
 |---|---|
-| `index.html` | Semantic homepage, SEO text, sections and copy |
-| `credits.html` | Attribution and media licenses |
-| `src/style.css` | App-inspired tokens and responsive layouts |
-| `src/motion.css` | Micro-interactions, reveals and reduced-motion behavior |
-| `src/main.ts` | Theme, mode preview, scroll choreography and release links |
-| `src/scene.ts` | Procedural 3D model, lighting, interaction and GPU cleanup |
-| `src/sections.ts`, `src/sections.css` | "Kobra, expanded" previews, Editor sequence and their reduced-motion states |
-| `src/emblem.ts` | 3D Kobra emblem built from the logo geometry, lazy-loaded with fallback |
-| `tests/capture.mjs` | Section screenshots at any width/theme for visual review |
-| `src/config.ts` | Release version/URLs and mode-specific content |
-| `public/assets/` | Real app screenshots, artwork and social image |
-| `.github/workflows/pages.yml` | Build and Pages deployment |
-| `CLAUDE_HANDOFF.md` | Continuation prompt, design direction and completion checklist |
+| `index.html` | Semantic page, static copy and the no-JavaScript layout |
+| `src/content.ts` | **Claims to verify**: all copy for the feature bar and the new Editor, and their FAQ answers |
+| `src/content-html.ts` | Renders `content.ts` into `<!--content:…-->` markers (via the plugin in `vite.config.ts`) |
+| `src/config.ts` | Release version and URLs; Kobra / Studio mode copy |
+| `src/scroll.ts` | One rAF loop for all scroll scenes; progress helpers; the `motion` switch |
+| `src/hero.ts`, `src/scene.ts` | Hero choreography; the Three.js display (lazy chunk) |
+| `src/story.ts` | Statement, Everyday, feature bar gallery, appearance wipe, mode stack, mask lines |
+| `src/editor.ts` | Editor sequence and the keyframe demo |
+| `src/sections.ts` | Working previews in Try it |
+| `src/interactions.ts` | Segmented thumbs, nav indicator, magnetic buttons, card tilt |
+| `src/images.ts` | Theme-aware `srcset` switching; the hero texture URL |
+| `src/emblem.ts` | 3D Kobra emblem in the download section |
+| `src/style.css`, `features.css`, `sections.css`, `editor.css`, `motion.css` | Tokens and layouts; feature bar; previews; Editor; micro-interactions and reveals |
+| `scripts/screens.py`, `scripts/screens.json` | Capture conversion and the list of screens and crops |
+| `scripts/film.py` | Stills from the sample films |
+| `public/assets/screens/` | Generated screens and crops, plus `MANIFEST.md` |
+| `public/assets/film/` | Sample-film stills (CC BY 3.0 / CC0, see `credits.html`) |
+| `tests/` | Playwright suite and the section capture script |
 
-## Downloads
+## Motion rules
 
-Version 2.1.0 is published at https://github.com/iksamxul/Kobra/releases/tag/v2.1.0, and `setupUrl`, `portableUrl` and `notesUrl` in `src/config.ts` point at it; the same links are written into `index.html` so they work without JavaScript. For a new release, upload the verified installers to a new GitHub Release and update both places. Empty URLs show an honest “Public download links are being prepared” message. No fake download buttons or local paths are published. Do not add large Windows executables to this website repository.
+- `html.motion` is set before first paint when JavaScript runs and reduced motion is off. Pinned, scroll-driven layouts and initial hidden states exist only under it, so reduced motion and no-JavaScript get a complete static page with every step in normal flow.
+- Scenes map native scroll position to progress and write custom properties; nothing intercepts wheel or touch. Reads happen before writes in a single rAF.
+- Three.js loads as a separate chunk when the hero or emblem comes near, renders on demand (never idle), pauses offscreen and in hidden tabs, caps device pixel ratio at 2 and disposes on navigation. The hero stops rendering once the HTML screen has taken over.
 
-The application identifies itself as 2.1.0. Every feature on the page is in that build and covered by its tests: the seven Kobra additions and the Editor have their own smoke checks, and an optional networked render check confirms the Editor's MP4 export (a two-video edit renders to a playable 1280×720 MP4). Verify a new app release before changing claims or download URLs.
+## Images
+
+Every app screen is a pair of WebPs, `<name>-1440.webp` and `<name>-2880.webp`, used through `srcset`/`sizes`; feature crops are cut from the full-size capture at 1x and 2x of their CSS size. The hero's WebGL texture is the 2880 file with mipmaps and maximum anisotropy, and the light or dark file is preloaded as the LCP image.
+
+`scripts/screens.py` turns full-size PNG captures into those files. For each name it uses `captures/<name>.png` (2880×1800 captures; ignored by git) and otherwise falls back to the interim 1920×1200 capture listed in `scripts/screens.json`, from the desktop project's `review/modes/`. It reports every file that had to be enlarged. **All current screens are interim and enlarged at 2x.** `public/assets/screens/MANIFEST.md` lists every screen and crop with the app state it should show, including the feature-bar screens that do not exist yet.
+
+```sh
+python scripts/screens.py                     # everything
+python scripts/screens.py --only everyday     # names containing "everyday"
+python scripts/screens.py --captures D:/caps  # another capture folder
+```
+
+## Claims and releases
+
+Copy for features still being built (the feature bar and the new Editor) lives only in `src/content.ts`. While `upcoming.show` is true those sections carry a "Coming in the next update" badge, because the download is 2.1.0. Set `capture: true` per tab once its screenshots exist.
+
+Version 2.1.0 is published at https://github.com/iksamxul/Kobra/releases/tag/v2.1.0, and `setupUrl`, `portableUrl` and `notesUrl` in `src/config.ts` point at it; the same links are in `index.html` for the no-JavaScript page. For a new release, upload the verified installers to a new GitHub Release and update both places. Empty URLs show an honest "Public download links are being prepared" message. Do not add Windows executables to this repository.
 
 ## GitHub Pages
 
-Repository Settings → Pages → Source must be **GitHub Actions**. Pushing `main` builds `dist/` and deploys it. Relative Vite asset URLs support both a project page (`/Kobra/`) and a root user page. The workflow expects this site's package.json at repository root, as it is in the public repository.
-
-For another domain, update metadata/canonical URLs and add a `public/CNAME` only after the domain is configured. Open Graph URLs should be absolute for social crawlers.
+Repository Settings → Pages → Source must be **GitHub Actions**. Pushing `main` builds `dist/` and deploys it; pull requests build and test without deploying. Relative URLs support both a project page (`/Kobra/`) and a root user page. For another domain, update the canonical and Open Graph URLs and add `public/CNAME` once the domain is configured.
 
 ## Asset provenance
 
-The WebP screens were resized to 1440 px wide from the desktop application's `review/modes/` captures (1920×1200). They depict demo data, not personal files. Asset mapping:
-
-- `watch-dark.webp` → `dark-wide-kobra-09-watch.png`
-- `tools-dark.webp` → `dark-wide-kobra-11-tools-video.png`
-- `home-{light,dark}.webp` → `{light,dark}-wide-kobra-12-home-continue.png`
-- `studio-{light,dark}.webp` → `{light,dark}-wide-studio-13-media-studio.png`
-- `upnext-{light,dark}.webp` → `{light,dark}-wide-kobra-23-up-next.png`
-- `editor-{light,dark}.webp` → `{light,dark}-wide-studio-16-editor.png`
-- `bunny-poster.jpg`, `flower-poster.jpg` → desktop `public/`
-- `kobra.svg` → desktop `build/icon.svg`
-- `sintel-poster.jpg` → desktop `public/sintel-poster.jpg`
-
-Keep the Blender/MDN attribution in `credits.html` when replacing visuals. All models in this base are procedural geometry; there is no GLB to download.
+Screens are generated from the desktop app's demo-profile captures (no personal files). Film stills come from the app's bundled sample media via `scripts/film.py`: Sintel and Big Buck Bunny (© Blender Foundation, CC BY 3.0) and the MDN flower clip (CC0). `kobra.svg` is the app icon. Keep the attribution in `credits.html` when replacing visuals. All 3D models are procedural; there is no GLB.
