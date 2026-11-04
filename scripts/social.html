@@ -1,0 +1,69 @@
+<!doctype html>
+<!-- The link-preview card (Open Graph / Twitter). Rendered by scripts/social.mjs into
+     public/assets/social-v1.jpg at 2400×1260. Uses the app captures in captures/. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --display: "Segoe UI Variable Display", "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+    --font: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: #0a0a0b; }
+  .card {
+    position: relative; width: 1200px; height: 630px; overflow: hidden;
+    font-family: var(--font); color: #f5f5f7;
+    background:
+      radial-gradient(760px 460px at 82% 70%, rgba(168, 122, 74, .30), transparent 64%),
+      radial-gradient(620px 380px at 0% 0%, rgba(255, 255, 255, .07), transparent 62%),
+      linear-gradient(180deg, #141416 0%, #0b0b0c 100%);
+  }
+  /* A faint floor line the windows sit on, like the site's hero stage. */
+  .card::after {
+    content: ""; position: absolute; inset: auto 0 0 0; height: 160px;
+    background: linear-gradient(180deg, transparent, rgba(10, 10, 11, .85));
+    z-index: 3;
+  }
+  .brand { position: absolute; left: 64px; top: 58px; display: flex; align-items: center; gap: 14px;
+    font-family: var(--display); font-size: 27px; font-weight: 600; letter-spacing: -.025em; z-index: 4; }
+  .brand img { width: 46px; height: 46px; filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .5)); }
+  h1 { position: absolute; left: 62px; top: 160px; z-index: 4;
+    font-family: var(--display); font-size: 68px; line-height: 1.0; font-weight: 600; letter-spacing: -.048em; }
+  h1 span { display: block; }
+  h1 span + span { background: linear-gradient(92deg, #f5f5f7 10%, #9d9da3 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { position: absolute; left: 64px; top: 324px; width: 410px; z-index: 4;
+    font-size: 22px; line-height: 1.36; color: #a1a1a6; letter-spacing: -.012em; }
+  .sub b { color: #e8e8ed; font-weight: 600; }
+  .tabs { position: absolute; left: 64px; top: 428px; display: flex; gap: 6px; list-style: none; z-index: 4; }
+  .tabs li { padding: 6px 11px; border: 1px solid rgba(255, 255, 255, .14); border-radius: 99px; white-space: nowrap;
+    background: rgba(255, 255, 255, .055); font-size: 13.5px; font-weight: 500; color: #d2d2d7; }
+  .tabs li.on { background: #f5f5f7; color: #111113; border-color: #f5f5f7; }
+  .meta { position: absolute; left: 64px; bottom: 50px; z-index: 4; font-size: 15px; color: #8a8a90; letter-spacing: -.005em; }
+  .meta i { display: inline-block; width: 3px; height: 3px; margin: 0 10px 4px; border-radius: 50%; background: #6e6e73; }
+
+  .win { position: absolute; overflow: hidden; border-radius: 14px; border: 1px solid rgba(255, 255, 255, .16);
+    background: #111; }
+  .win img { display: block; width: 100%; height: auto; }
+  .back { left: 640px; top: 66px; width: 640px; z-index: 1; filter: brightness(.62) saturate(.85);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8); }
+  .front { left: 536px; top: 150px; width: 720px; z-index: 2;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .6), 0 50px 110px -30px rgba(0, 0, 0, .95), 0 24px 48px -24px rgba(0, 0, 0, .7); }
+  .front::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand"><img src="../public/assets/kobra.svg" alt="">Kobra</div>
+    <h1><span>Just you.</span><span>And the picture.</span></h1>
+    <p class="sub">A quiet video player for Windows, with <b>Kobra Studio</b> and a real editor inside.</p>
+    <ul class="tabs">
+      <li class="on">Watch</li><li>Clips</li><li>Convert</li><li>Scenes</li><li>Listen</li><li>Insights</li>
+    </ul>
+    <p class="meta">Free for Windows 10 and 11<i></i>On your device<i></i>Version 1.0</p>
+    <div class="win back"><img src="../captures/studio-editor-dark.png" alt=""></div>
+    <div class="win front"><img src="../captures/watch-dark.png" alt=""></div>
+  </div>
+</body>
+</html>

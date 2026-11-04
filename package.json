@@ -9,6 +9,7 @@
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "screens": "python scripts/screens.py",
     "film": "python scripts/film.py",
+    "social": "node scripts/social.mjs",
     "test": "playwright test",
     "verify": "npm run build && playwright test"
   },
