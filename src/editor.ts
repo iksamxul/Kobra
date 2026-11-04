@@ -1,69 +1,60 @@
-import { clamp, easeInOut, easeOut, motion, onScroll, range, smooth } from './scroll';
+import { clamp, motion, onScroll, range } from './scroll';
 
-// The Editor sequence, driven only by scroll position. Four steps:
-//   0.00-0.22  monitors and timeline; the playhead plays the edit
-//   0.22-0.48  the program monitor explodes into its layers in 3D
-//   0.48-0.74  razor at the playhead, ripple delete, a crossfade appears
-//   0.74-1.00  the sequence changes shape (16:9, 9:16, 1:1, 4:5), then exports
-const STEPS = [0, .22, .48, .74];
-const ASPECTS = [16 / 9, 9 / 16, 1, 4 / 5];
-// [progress, aspect index]: holds and moves between the four sequence shapes.
-const SHAPES: [number, number][] = [[.76, 0], [.8, 1], [.835, 1], [.86, 2], [.885, 2], [.91, 3]];
-
-function aspectAt(p: number) {
-  if (p <= SHAPES[0][0]) return ASPECTS[0];
-  for (let i = 1; i < SHAPES.length; i++) {
-    const [end, to] = SHAPES[i], [start, from] = SHAPES[i - 1];
-    if (p <= end) return ASPECTS[from] + (ASPECTS[to] - ASPECTS[from]) * easeInOut(range(p, start, end));
-  }
-  return ASPECTS[3];
-}
+// The Editor sequence: real captures of Kobra Studio's Editor (public/assets/screens/editor-*-dark,
+// 1440x900 windows), driven only by scroll. Each step has beats; a beat names the capture on
+// screen and the region the highlight outlines. Regions are CSS pixels of the 1440x900 window,
+// recorded by the app's site capture (electron/review-site.cjs -> captures/editor-rects.json).
+type Rect = [number, number, number, number];
+const WINDOW = [1440, 900];
+const SOURCE: Rect = [337, 157, 531, 313], PROGRAM: Rect = [875, 146, 548, 329], TIMELINE: Rect = [17, 516, 1406, 355];
+const SIDE: Rect = [17, 146, 309, 370], TRACKS: Rect = [17, 586, 1406, 136], TOOLS: Rect = [17, 517, 470, 47];
+const MEADOW: Rect = [433, 682, 384, 35], SHAPE: Rect = [109, 366, 194, 34], EXPORT: Rect = [1021, 151, 390, 566];
+const BEATS: { shot: string; rect: Rect }[][] = [
+  [{ shot: 'editor', rect: SOURCE }, { shot: 'editor', rect: PROGRAM }, { shot: 'editor', rect: TIMELINE }],
+  [{ shot: 'editor-layers', rect: TRACKS }, { shot: 'editor-layers', rect: SIDE }],
+  [{ shot: 'editor-cut', rect: TOOLS }, { shot: 'editor-cut', rect: MEADOW }, { shot: 'editor-cut', rect: SIDE }],
+  [{ shot: 'editor-inspector', rect: MEADOW }, { shot: 'editor-inspector', rect: SIDE }],
+  [{ shot: 'editor-shape', rect: SHAPE }, { shot: 'editor-shape', rect: PROGRAM }, { shot: 'editor-export', rect: EXPORT }],
+];
+const PAD = 6;
 
 function sequence() {
   const run = document.querySelector<HTMLElement>('.editor-run');
   if (!run) return;
-  const scene = run.querySelector<HTMLElement>('.ed-scene')!;
   const steps = [...run.querySelectorAll<HTMLElement>('.ed-step')];
-  const chips = [...run.querySelectorAll<HTMLElement>('.ed-aspects i')];
-  const exportLabel = run.querySelector<HTMLElement>('.ed-export span')!;
+  const shots = [...run.querySelectorAll<HTMLImageElement>('.ed-shot')];
+  const focus = run.querySelector<HTMLElement>('.ed-focus')!;
   const list = run.querySelector<HTMLElement>('.ed-steps')!;
-  let step = -1, chip = 0, saved = false;
-  const set = (name: string, value: number | string) => scene.style.setProperty(name, typeof value === 'number' ? value.toFixed(4) : value);
-  onScroll(run, 'pin', p => {
-    const next = STEPS.reduce((found, start, i) => (p >= start ? i : found), 0);
-    if (next !== step) {
-      step = next;
-      steps.forEach((element, i) => element.classList.toggle('is-active', i === next));
-    }
-    list.style.setProperty('--edp', p.toFixed(4));
-    // Layers: the window turns and the program's planes separate in depth.
-    const explode = smooth(range(p, .24, .34)) * (1 - smooth(range(p, .42, .5)));
-    set('--ex', explode);
-    set('--dim', explode);
-    set('--wry', `${(explode * -34).toFixed(3)}deg`);
-    set('--wrx', `${(explode * 18).toFixed(3)}deg`);
-    set('--ws', 1 - explode * .16);
-    set('--focus', smooth(range(p, .48, .52)) * (1 - smooth(range(p, .72, .76))));
-    // Cut: the playhead stops at 38%, the razor splits Meadow, the tail goes, the rest closes up.
-    const playhead = p < .22 ? range(p, 0, .2) * 30 : p < .48 ? 30 + range(p, .22, .46) * 4 : p < .74 ? 34 + easeInOut(range(p, .48, .53)) * 4 : 38 + range(p, .74, .98) * 44;
-    set('--ph', playhead);
-    set('--razor', range(p, .52, .55) * (1 - range(p, .6, .63)));
-    set('--cut', range(p, .54, .56));
-    set('--del', range(p, .58, .62));
-    set('--ripple', easeInOut(range(p, .62, .67)));
-    set('--trans', easeOut(range(p, .68, .72)));
-    // Shape: the program canvas morphs between sequence shapes inside a 16:10 stage.
-    const aspect = aspectAt(p);
-    set('--cw', `${(aspect >= 1.6 ? 100 : aspect / 1.6 * 100).toFixed(2)}%`);
-    set('--ch', `${(aspect >= 1.6 ? 1.6 / aspect * 100 : 100).toFixed(2)}%`);
-    const nearest = ASPECTS.reduce((best, value, i) => (Math.abs(value - aspect) < Math.abs(ASPECTS[best] - aspect) ? i : best), 0);
-    if (nearest !== chip) { chip = nearest; chips.forEach((element, i) => element.classList.toggle('on', i === nearest)); }
-    const exported = range(p, .93, .985);
-    set('--exp', exported);
-    if ((exported >= 1) !== saved) { saved = exported >= 1; exportLabel.textContent = saved ? 'Saved on this device' : 'Export MP4'; }
-  }, { reset: () => scene.removeAttribute('style') });
-  // With motion off every step is listed; the window shows the finished edit.
-  if (!motion()) steps.forEach(element => element.classList.add('is-active'));
+  let shown = '', step = -1;
+  const show = (shot: string) => {
+    if (shot === shown) return;
+    shown = shot;
+    // Only the capture on screen is announced; the others are hidden from assistive tech.
+    shots.forEach(img => { const on = img.dataset.shot === shot; img.classList.toggle('is-active', on); img.toggleAttribute('aria-hidden', !on); });
+  };
+  const update = (p: number) => {
+    const index = Math.min(BEATS.length - 1, Math.floor(p * BEATS.length));
+    const beats = BEATS[index];
+    const local = clamp(p * BEATS.length - index);
+    const beat = beats[Math.min(beats.length - 1, Math.floor(local * beats.length))];
+    if (index !== step) { step = index; steps.forEach((element, i) => element.classList.toggle('is-active', i === index)); }
+    show(beat.shot);
+    const [x, y, w, h] = beat.rect;
+    focus.style.setProperty('--fx', ((x - PAD) / WINDOW[0]).toFixed(4));
+    focus.style.setProperty('--fy', ((y - PAD) / WINDOW[1]).toFixed(4));
+    focus.style.setProperty('--fw', ((w + PAD * 2) / WINDOW[0]).toFixed(4));
+    focus.style.setProperty('--fh', ((h + PAD * 2) / WINDOW[1]).toFixed(4));
+    list.style.setProperty('--edp', range(p, 0, 1).toFixed(4));
+  };
+  const reset = () => { steps.forEach(element => element.classList.add('is-active')); shots.forEach(img => img.removeAttribute('aria-hidden')); shown = ''; step = -1; };
+  onScroll(run, 'pin', update, { reset });
+  // Load every capture a little before the section arrives, so no step starts on a blank frame.
+  new IntersectionObserver((entries, observer) => {
+    if (!entries.some(entry => entry.isIntersecting)) return;
+    observer.disconnect();
+    shots.forEach(img => { img.loading = 'eager'; });
+  }, { rootMargin: '150% 0px' }).observe(run);
+  if (!motion()) reset();
 }
 
 // Keyframes: four properties, each between two keys, with a choice of easing.

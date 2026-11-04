@@ -12,7 +12,8 @@
     "featurebar-convert-dark", "featurebar-convert-light",
     "featurebar-scenes-dark", "featurebar-scenes-light",
     "featurebar-listen-dark", "featurebar-listen-light",
-    "featurebar-insights-dark", "featurebar-insights-light"
+    "featurebar-insights-dark", "featurebar-insights-light",
+    "editor-dark", "editor-layers-dark", "editor-cut-dark", "editor-inspector-dark", "editor-shape-dark", "editor-export-dark"
   ],
   "crops": {
     "everyday-home": { "from": "home", "box": [0, 0, 1440, 900], "widths": [760, 1520] },

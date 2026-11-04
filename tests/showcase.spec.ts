@@ -38,7 +38,7 @@ for (const theme of ['light', 'dark'] as const) {
       for (const step of await page.locator('.feature-step').all()) { await expect(step).toBeVisible(); await expect(step.locator('img')).toBeVisible(); }
       await expect(page.locator('.fb-panel')).toHaveCount(6);
       for (const panel of await page.locator('.fb-panel').all()) await expect(panel).toBeVisible();
-      await expect(page.locator('.ed-step')).toHaveCount(4);
+      await expect(page.locator('.ed-step')).toHaveCount(5);
       for (const step of await page.locator('.ed-step').all()) await expect(step).toBeVisible();
       await expect(page.locator('.wipe-pearl')).toBeVisible();
       // Theme-aware screens follow the appearance.
@@ -150,16 +150,19 @@ test('motion: 3D hero, scroll stories, keyboard, theme persistence and credits',
   // Appearance: the frame opens and Midnight wipes all the way across.
   await scrollToProgress(page, '#appearance', 1);
   await expect.poll(() => cssVar(page, '#appearance', '--wipe')).toBe(0);
-  // Editor: monitors, exploded layers, cut, shape and export.
-  for (const [index, progress] of [.1, .3, .6, .99].entries()) {
+  // Editor: real captures for monitors, layers, cut, motion and shape, ending on the export sheet.
+  const shots = ['editor', 'editor-layers', 'editor-cut', 'editor-inspector', 'editor-shape'];
+  for (const [index, progress] of [.1, .3, .5, .7, .85].entries()) {
     await scrollToProgress(page, '.editor-run', progress);
     await expect(page.locator('.ed-step').nth(index)).toHaveClass(/is-active/);
+    await expect(page.locator(`.ed-shot[data-shot="${shots[index]}"]`)).toHaveClass(/is-active/);
+    await expect(page.locator('.ed-shot.is-active')).toHaveCount(1);
     await page.screenshot({ path: `review/screenshots/motion-editor-${index}.png` });
   }
-  await scrollToProgress(page, '.editor-run', .38);
-  await expect.poll(() => cssVar(page, '.ed-scene', '--ex')).toBeGreaterThan(.95);
-  await scrollToProgress(page, '.editor-run', 1);
-  await expect(page.locator('.ed-export span')).toHaveText('Saved on this device');
+  await scrollToProgress(page, '.editor-run', .99);
+  await expect(page.locator('.ed-shot[data-shot="editor-export"]')).toHaveClass(/is-active/);
+  await expect(page.locator('.ed-shot.is-active')).toHaveJSProperty('complete', true);
+  expect(await page.locator('.ed-focus').evaluate(el => parseFloat(getComputedStyle(el).width))).toBeGreaterThan(40);
   // The download mark becomes a 3D emblem.
   await page.locator('#download').scrollIntoViewIfNeeded();
   await expect(page.locator('#emblem-stage')).toHaveAttribute('data-renderer', 'webgl', { timeout: 20000 });

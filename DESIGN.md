@@ -23,7 +23,7 @@
 | Try it | Working previews of real behavior | Card tilt and glare, sliding segmented pill, countdown ring, transcript follow |
 | Appearance | Pearl and Midnight | Pinned: clip-path frame opens, Midnight wipes across |
 | Two modes | Kobra and Kobra Studio | Switch swaps a stack of screens; layers drift at three depths |
-| Editor | The new Editor | Pinned CSS 3D: layers explode, razor/ripple/transition, sequence shapes, export; keyframe demo |
+| Editor | The new Editor | Pinned real captures with a moving highlight: monitors, layers, cut, motion, shape and export; keyframe demo |
 | Local-first | Ownership and calm | Mask-line reveal, lock tile settles |
 | Questions, Download | Answers and one next step | Disclosure, 3D emblem, real release links |
 

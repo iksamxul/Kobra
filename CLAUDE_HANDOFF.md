@@ -11,7 +11,7 @@ Verdict on the first version: "the images on the site are extremely low res and 
 Read `README.md` (structure, scripts, rules) and `DESIGN.md` (visual intent, motion map). The page is a static Vite/TypeScript/Three.js site:
 
 - Pinned hero with a procedural aluminium display; the camera moves into the screen and hands off to the HTML screenshot.
-- Word-by-word statement, sticky Everyday frame, horizontal feature-bar gallery, clip-path appearance wipe, parallax mode stacks, a CSS 3D exploded Editor with a keyframe demo, mask-line reveals, the 3D emblem.
+- Word-by-word statement, sticky Everyday frame, horizontal feature-bar gallery, clip-path appearance wipe, parallax mode stacks, a pinned Editor story told with real captures and a moving highlight, with a keyframe demo, mask-line reveals, the 3D emblem.
 - Working previews (Up next, picture modes, transcript, moments, folder, history), magnetic primaries, tilt and glare, sliding nav and segmented pills, View Transition theme switch.
 - Responsive 1440/2880 WebP screens and 1x/2x crops from `scripts/screens.py`.
 

@@ -24,6 +24,7 @@ Every app image on the page is a real screenshot of Kobra 1.0, cut from captures
 | `upnext` | Two modes stack, Kobra (back) | My videos, Up next: Sintel playing, Big Buck Bunny and Flower queued |
 | `studio-media` | Two modes stack, Studio (back) | Kobra Studio, Media Studio overview |
 | `featurebar-watch`, `-clips`, `-convert`, `-scenes`, `-listen`, `-insights` | Feature bar panels | Each space of Kobra's feature bar with the demo library |
+| `editor`, `editor-layers`, `-cut`, `-inspector`, `-shape`, `-export` (dark only) | Editor section steps | The Trailer cut edit: monitors; Effects with Gatekeeper selected; Razor and the Transition inspector; the Motion inspector; a 9:16 sequence; the Export sheet. Highlight regions: `captures/editor-rects.json` |
 
 ## Crops (`<crop>-<theme>-<w>.webp`)
 

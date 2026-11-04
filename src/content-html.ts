@@ -4,6 +4,8 @@ import { editor, faq, featureBar, upcoming, type FeatureTab } from './content';
 // claims stay in one file while the page remains complete without JavaScript.
 const esc = (text: string) => text.replace(/[&<>"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[char]!);
 const screens = './assets/screens/';
+// The Editor section is always Midnight, so it uses the dark captures.
+const editorShot = (shot: string, alt: string, className: string, name = '') => `<img class="${className}"${name ? ` data-shot="${name}"` : ''} src="${screens}${shot}-dark-1440.webp" srcset="${screens}${shot}-dark-1440.webp 1440w, ${screens}${shot}-dark-2880.webp 2880w" sizes="(max-width: 760px) 92vw, min(1180px, 92vw)" width="1440" height="900" loading="lazy" decoding="async" alt="${esc(alt)}"/>`;
 const film = './assets/film/';
 
 const icons: Record<FeatureTab['id'], string> = {
@@ -95,7 +97,8 @@ export function renderContent(slot: string): string {
     case 'editor-head': return `<p class="eyebrow">${esc(editor.eyebrow)}</p>${badge()}
         <h2 id="editor-title">${esc(editor.title)}<br/> <span>${esc(editor.titleMuted)}</span></h2>
         <p class="section-description">${esc(editor.intro)}</p>`;
-    case 'editor-steps': return editor.steps.map((step, i) => `<li class="ed-step${i === 0 ? ' is-active' : ''}" data-step="${i}"><span class="step-index">0${i + 1} · ${esc(step.label)}</span><h3>${esc(step.title)}</h3><p>${esc(step.body)}</p></li>`).join('');
+    case 'editor-steps': return editor.steps.map((step, i) => `<li class="ed-step${i === 0 ? ' is-active' : ''}" data-step="${i}">${editorShot(step.shot, step.alt, 'ed-step-shot')}<span class="step-index">0${i + 1} · ${esc(step.label)}</span><h3>${esc(step.title)}</h3><p>${esc(step.body)}</p></li>`).join('');
+    case 'editor-shots': return [...editor.steps.map(step => [step.shot, step.alt]), ['editor-export', 'The Export sheet: MP4, WebM or GIF, rendered on this computer']].map(([shot, alt], i) => editorShot(shot, alt, `ed-shot${i === 0 ? ' is-active' : ''}`, shot)).join('');
     case 'keyframes-copy': return `<h3 id="kf-title">${esc(editor.keyframes.title)}</h3><p>${esc(editor.keyframes.body)}</p>`;
     case 'editor-capabilities': return editor.capabilities.map((item, i) => `<li class="reveal" style="--d:${i % 4}"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">${capabilityIcons[i] || ''}</svg><h4>${esc(item.title)}</h4><p>${esc(item.body)}</p></li>`).join('');
     case 'faq-upcoming': return faq.map(item => `<details><summary>${esc(item.question)}<span aria-hidden="true">+</span></summary><p>${esc(item.answer)}</p></details>`).join('');

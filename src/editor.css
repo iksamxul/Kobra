@@ -1,8 +1,6 @@
-/* Editor: always a Midnight stage, like the app's dark workspaces. The window is real
-   DOM in CSS 3D: text stays crisp and the layers are actual planes in depth. Scroll
-   drives it through custom properties set by src/editor.ts:
-   --ex explode, --dim surroundings, --wrx/--wry/--ws window pose, --cut/--del/--ripple/
-   --trans timeline edits, --ph playhead (0-100), --cw/--ch program canvas, --exp export. */
+/* Editor: always a Midnight stage, like the app's dark workspaces. The pinned frame shows real
+   captures of the Editor (public/assets/screens/editor-*-dark); src/editor.ts crossfades them and
+   moves the highlight (--fx/--fy/--fw/--fh, fractions of the 1440x900 window) as you scroll. */
 .editor{background:#0b0b0d;color:#f5f5f7;padding-top:clamp(96px,12vw,160px);overflow-x:clip;--e-line:rgba(255,255,255,.1);--e-muted:#a1a1a6;--e-panel:#161618}
 .editor .eyebrow{color:var(--e-muted)}
 .editor h2>br+span{color:#86868b}
@@ -12,89 +10,31 @@
 .editor-head h2{margin-top:16px}
 .editor-head .section-description{max-width:660px;margin:20px auto 0;color:var(--e-muted)}
 .editor-run{padding-block:72px}
-.editor-grid{display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,1.4fr);align-items:center;gap:clamp(32px,5vw,72px)}
 .ed-steps{display:grid;gap:30px;margin:0;padding:0;list-style:none}
 .ed-step .step-index{color:var(--e-muted)}
 .ed-step h3{margin-top:10px;font-size:clamp(24px,2.4vw,34px);line-height:1.08;letter-spacing:-.04em}
 .ed-step p{margin-top:12px;font-size:15.5px;color:var(--e-muted)}
+.ed-frame{display:none}
+.ed-step-shot{display:block;width:100%;height:auto;margin-bottom:22px;border-radius:12px;box-shadow:0 0 0 1px var(--e-line),0 40px 80px -40px #000}
 
-.motion .editor-run{height:460vh;padding:0}
+.motion .editor-run{height:540vh;padding:0}
 .motion .editor-pin{position:sticky;top:0;display:flex;align-items:center;height:100svh;padding-top:var(--header);overflow:clip}
-.motion .ed-steps{position:relative;display:block;min-height:250px}
-.motion .ed-step{position:absolute;inset:0 0 auto;opacity:0;visibility:hidden;transform:translateY(18px);transition:opacity .5s ease,transform .7s var(--ease),visibility .5s}
-.motion .ed-step.is-active{opacity:1;visibility:visible;transform:none}
-.motion .ed-steps::after{content:"";position:absolute;left:0;bottom:-28px;width:120px;height:2px;border-radius:2px;background:linear-gradient(90deg,#f5f5f7 calc(var(--edp,0) * 100%),rgba(255,255,255,.15) 0)}
-
-.ed-scene{position:relative;min-width:0;perspective:2200px;perspective-origin:50% 30%}
-.ed-note{position:absolute;right:6px;bottom:-28px;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#6e6e73}
-.ed-window{--fo:var(--focus,0);position:relative;display:flex;flex-direction:column;gap:10px;padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:linear-gradient(160deg,#1d1d20,#141416);box-shadow:0 70px 120px -50px #000,inset 0 1px rgba(255,255,255,.08);transform-style:preserve-3d;transform-origin:50% 80%;transform:rotateX(var(--wrx,0deg)) rotateY(calc(var(--wry,0deg) * var(--wrf,1))) scale(calc(var(--ws,1) + var(--fo) * var(--fz,.1)));font-size:11px}
-.ed-bar{display:flex;align-items:center;gap:10px;height:30px;padding:0 4px;color:var(--e-muted);opacity:calc(1 - var(--dim,0) * .75)}
-.ed-dots{display:flex;gap:5px}
-.ed-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.18)}
-.ed-bar b{color:#f5f5f7;font-weight:600}
-.ed-crumb::before{content:"/ ";opacity:.5}
-.ed-aspects{display:flex;gap:2px;margin-left:auto;padding:2px;border-radius:8px;background:rgba(255,255,255,.06)}
-.ed-aspects i{padding:3px 8px;border-radius:6px;font-style:normal;font-variant-numeric:tabular-nums;transition:background .3s ease,color .3s ease}
-.ed-aspects i.on{background:#2c2c30;color:#f5f5f7;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
-.ed-export{position:relative;overflow:hidden;padding:5px 12px;border-radius:8px;background:#f5f5f7;color:#111;font-weight:600}
-.ed-export i{position:absolute;inset:0;background:rgba(0,0,0,.14);transform:scaleX(var(--exp,0));transform-origin:left}
-.ed-export span{position:relative}
-
-.ed-monitors{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:10px;transform-style:preserve-3d}
-.ed-monitor{position:relative;display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:12px;background:#0d0d0f;box-shadow:inset 0 0 0 1px var(--e-line)}
-.ed-source{opacity:calc(1 - var(--dim,0) * .8 - var(--focus,0) * .5)}
-.ed-program{transform-style:preserve-3d}
-.ed-program>.ed-mlabel,.ed-program>.ed-tc{opacity:calc(1 - var(--dim,0) * .8 - var(--focus,0) * .5)}
-.ed-mlabel{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--e-muted)}
-.ed-tc{font-size:10px;font-variant-numeric:tabular-nums;color:var(--e-muted)}
-.ed-screen{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:6px;margin-block:auto}
-.ed-screen img{width:100%;height:100%;object-fit:cover}
-.ed-inout{position:absolute;left:18%;right:30%;bottom:6px;height:4px;border-radius:2px;background:rgba(255,255,255,.85)}
-.ed-inout i{position:absolute;top:-4px;width:2px;height:12px;background:#fff}
-.ed-inout i:last-child{right:0}
-.ed-stage{position:relative;aspect-ratio:16/10;transform-style:preserve-3d}
-.ed-canvas{position:absolute;left:50%;top:50%;width:var(--cw,100%);height:var(--ch,90%);transform:translate(-50%,-50%);transform-style:preserve-3d}
-.ed-layer{position:absolute;inset:0;border-radius:6px;transform-style:preserve-3d;box-shadow:0 0 0 1px rgba(255,255,255,calc(var(--ex,0) * .4));background:rgba(255,255,255,calc(var(--ex,0) * .035))}
-.ed-v1{overflow:hidden;background:#000}
-.ed-v1 img{width:100%;height:100%;object-fit:cover}
-.ed-v2{transform:translateZ(calc(var(--ex,0) * 120px * var(--exd,1)))}
-.ed-pip{position:absolute;right:6%;bottom:8%;width:32%;aspect-ratio:16/9;overflow:hidden;border-radius:5px;box-shadow:0 8px 20px rgba(0,0,0,.5),0 0 0 1.5px rgba(255,255,255,.8)}
-.ed-pip img{width:100%;height:100%;object-fit:cover}
-.ed-text{transform:translateZ(calc(var(--ex,0) * 240px * var(--exd,1)))}
-.ed-title{position:absolute;left:7%;top:12%;font-family:var(--display);font-size:clamp(14px,2.2vw,30px);font-weight:700;letter-spacing:-.04em;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.5)}
-.ed-look{transform:translateZ(calc(var(--ex,0) * 360px * var(--exd,1)));background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.55) 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
-.ed-tag{position:absolute;left:calc(100% + 14px);top:calc(var(--tag-y,0) * 1%);padding:4px 9px;border-radius:99px;background:rgba(28,28,31,.85);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);font-size:10px;font-weight:600;letter-spacing:.06em;white-space:nowrap;color:#f5f5f7;opacity:clamp(0,calc(var(--ex,0) * 2 - 1),1)}
-.ed-tag::before{content:"";position:absolute;right:100%;top:50%;width:14px;height:1px;background:rgba(255,255,255,.4)}
-.ed-v1 .ed-tag{display:none}
-.ed-v1-tag{--tag-y:76}
-.ed-v2 .ed-tag{--tag-y:62}
-.ed-text .ed-tag{--tag-y:30}
-.ed-look .ed-tag{--tag-y:10}
-
-.ed-timeline{display:flex;flex-direction:column;gap:5px;padding:8px;border-radius:12px;background:#0d0d0f;box-shadow:inset 0 0 0 1px var(--e-line);opacity:calc(1 - var(--dim,0) * .75)}
-.ed-ruler{display:flex;justify-content:space-between;margin-left:30px;font-size:9px;font-variant-numeric:tabular-nums;color:var(--e-muted)}
-.ed-tracks{position:relative;display:grid;gap:4px}
-.ed-track{display:grid;grid-template-columns:24px minmax(0,1fr);align-items:center;gap:6px}
-.ed-tname{font-size:9px;font-weight:600;color:var(--e-muted)}
-.ed-lane{position:relative;height:26px;border-radius:5px;background:rgba(255,255,255,.035)}
-.ed-track[data-track=V1] .ed-lane{height:34px}
-.ed-clip{position:absolute;top:2px;bottom:2px;left:calc((var(--x) - var(--shift,0) * var(--ripple,0)) * 1%);width:calc(var(--w) * 1%);display:flex;align-items:flex-end;padding:0 6px 3px;overflow:hidden;border-radius:4px;background:#2a2a2e center/cover;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);font-size:9.5px;font-weight:600;white-space:nowrap;color:#fff}
-.ed-clip.v::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 20%,rgba(0,0,0,.7))}
-.ed-clip.v>*,.ed-clip.v{z-index:0}
-.ed-clip span{position:relative}
-.ed-clip.t{align-items:center;background:#3a3a40;color:#f5f5f7}
-.ed-clip.a{background:#1f2a24;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
-.ed-clip.wave{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='20'%3E%3Cg fill='%23ffffff' fill-opacity='.42'%3E%3Crect x='1' y='7' width='2' height='6'/%3E%3Crect x='5' y='4' width='2' height='12'/%3E%3Crect x='9' y='8' width='2' height='4'/%3E%3Crect x='13' y='2' width='2' height='16'/%3E%3Crect x='17' y='6' width='2' height='8'/%3E%3Crect x='21' y='9' width='2' height='2'/%3E%3Crect x='25' y='5' width='2' height='10'/%3E%3Crect x='29' y='3' width='2' height='14'/%3E%3Crect x='33' y='7' width='2' height='6'/%3E%3Crect x='37' y='5' width='2' height='10'/%3E%3Crect x='41' y='8' width='2' height='4'/%3E%3Crect x='45' y='6' width='2' height='8'/%3E%3C/g%3E%3C/svg%3E");background-repeat:repeat-x;background-position:0 50%;background-size:auto 70%}
-.ed-clip.music{justify-content:center;background-color:#24242b;clip-path:polygon(0 100%,7% 0,93% 0,100% 100%)}
-/* The Meadow clip is two pieces that read as one until the razor cut. */
-.ed-a{border-radius:4px 0 0 4px}
-.ed-b{border-radius:0 4px 4px 0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 2px 0 0 rgba(255,255,255,calc(var(--cut,0) * .9));opacity:calc(1 - var(--del,0));transform:translateY(calc(var(--del,0) * -10px))}
-.ed-b span{opacity:var(--cut,0)}
-.ed-trans{position:absolute;top:50%;left:calc(var(--at) * 1%);z-index:2;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:4px;background:#f5f5f7;box-shadow:0 2px 8px rgba(0,0,0,.6);transform:rotate(45deg) scale(var(--trans,0))}
-.ed-trans::after{content:"";position:absolute;inset:4px;border-radius:1px;background:linear-gradient(135deg,#111 50%,transparent 50%)}
-.ed-playhead{position:absolute;top:-6px;bottom:-2px;left:calc(30px + (100% - 30px) * var(--ph,0) / 100);width:2px;margin-left:-1px;border-radius:1px;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.12)}
-.ed-playhead::before{content:"";position:absolute;top:-2px;left:-4px;width:10px;height:8px;border-radius:2px 2px 5px 5px;background:#fff}
-.ed-razor{position:absolute;top:-6px;bottom:-2px;left:calc(30px + (100% - 30px) * .38);width:0;border-left:2px dashed #fff;opacity:calc(var(--razor,0));transform:scaleY(var(--razor,0));transform-origin:top}
+.motion .ed-show{display:flex;flex-direction:column;align-items:center;gap:clamp(20px,3.2vh,34px)}
+/* Sized by the height left for it, so the frame and the step text always fit under the header. */
+.motion .ed-frame{position:relative;display:block;width:min(1180px,100%,calc((100svh - var(--header) - 236px) * 1.6));margin:0;aspect-ratio:16/10;overflow:hidden;border-radius:14px;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 70px 120px -50px #000}
+.motion .ed-shot{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .55s ease}
+.motion .ed-shot.is-active{opacity:1}
+/* The highlight outlines the part a step talks about and dims the rest; nothing is cropped. */
+.ed-focus{display:none}
+.motion .ed-focus{position:absolute;display:block;left:calc(var(--fx,0) * 100%);top:calc(var(--fy,0) * 100%);width:calc(var(--fw,1) * 100%);height:calc(var(--fh,1) * 100%);border-radius:10px;box-shadow:0 0 0 1.5px rgba(255,255,255,.92),0 0 0 6px rgba(255,255,255,.1),0 0 0 9999px rgba(0,0,0,.3);transition:left .6s var(--ease),top .6s var(--ease),width .6s var(--ease),height .6s var(--ease);pointer-events:none}
+.motion .ed-step-shot{display:none}
+.motion .ed-steps{position:relative;display:block;width:min(720px,100%);min-height:136px;text-align:center}
+/* The outgoing step clears before the next arrives, so two captions never overlap. */
+.motion .ed-step{position:absolute;inset:0 0 auto;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .18s ease,transform .3s ease,visibility 0s .18s}
+.motion .ed-step.is-active{opacity:1;visibility:visible;transform:none;transition:opacity .4s ease .2s,transform .6s var(--ease) .2s,visibility 0s .2s}
+.motion .ed-step h3{margin-top:6px;font-size:clamp(22px,2.2vw,30px)}
+.motion .ed-step p{margin-top:8px;font-size:15px}
+.motion .ed-steps::before{content:"";position:absolute;left:50%;top:-14px;width:120px;height:2px;margin-left:-60px;border-radius:2px;background:linear-gradient(90deg,#f5f5f7 calc(var(--edp,0) * 100%),rgba(255,255,255,.15) 0)}
 
 .editor-after{padding-block:24px clamp(96px,12vw,160px)}
 .kf-demo{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(28px,4vw,56px);padding:clamp(20px,3vw,40px);border:1px solid var(--e-line);border-radius:var(--r-lg);background:var(--e-panel);box-shadow:inset 0 1px rgba(255,255,255,.06)}
@@ -138,49 +78,18 @@
 .capabilities p{margin-top:6px;font-size:14px;color:var(--e-muted)}
 
 @media(max-width:1000px){
-  .editor-grid{grid-template-columns:minmax(0,1fr)}
-  .motion .editor-grid{gap:28px}
-  .motion .ed-steps{min-height:170px;order:2}
-  .ed-scene{order:1}
   .capabilities{grid-template-columns:repeat(2,minmax(0,1fr))}
   .kf-demo{grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:760px){
-  .motion .editor-run{height:420vh}
-  .motion .ed-step p{font-size:14px}
-  .motion .ed-steps{min-height:190px}
+  .motion .editor-run{height:480vh}
   .ed-step h3{font-size:24px}
-  .ed-window{padding:6px;gap:6px;font-size:9px;border-radius:12px}
-  .ed-bar{height:22px}
-  .ed-crumb,.ed-dots{display:none}
-  .ed-aspects i{padding:2px 5px}
-  .ed-export{padding:3px 8px}
-  .ed-monitors{grid-template-columns:minmax(0,1fr)}
-  .ed-source{display:none}
-  .ed-tag{left:auto;right:6px;font-size:8.5px;padding:3px 6px}
-  .ed-tag::before{display:none}
-  .ed-lane{height:16px}
-  .ed-track[data-track=V1] .ed-lane{height:22px}
-  .ed-clip{font-size:7.5px;padding:0 3px 2px}
-  .ed-ruler{font-size:7.5px}
+  .motion .ed-step h3{font-size:21px}
+  .motion .ed-step p{font-size:14px}
+  .motion .ed-steps{min-height:150px}
+  .motion .ed-frame{width:min(100%,calc((100svh - var(--header) - 250px) * 1.6));border-radius:10px}
   .capabilities{grid-template-columns:minmax(0,1fr)}
   .capabilities li{padding:22px 20px}
 }
-
-/* Short screens: the pinned window is sized by the height it has, so it never rises under the
-   header, even at the Cut step's 10% zoom (the window is about 0.77x as tall as wide on
-   desktop, 1.25-1.4x on phones, with the steps below it under 1000px). */
-.motion .ed-scene{width:100%;max-width:calc((100svh - var(--header) - 32px) * 1.115);justify-self:center}
-/* Under 760px tall the Cut step keeps the window still instead of zooming it 10%, which would lift it under the header. */
-@media(max-height:760px){.ed-window{--fz:0}}
-@media(max-width:1000px){.motion .ed-scene{max-width:calc((100svh - var(--header) - 250px) * 1.115);margin-inline:auto}}
-@media(max-width:760px){
-  .motion .ed-scene{max-width:calc((100svh - var(--header) - 242px) * .66)}
-  /* Shallower layers and less turn, so the exploded view stays on a phone screen. */
-  .ed-window{--exd:.3;--wrf:.55}
-}
-@media(max-width:760px) and (max-height:720px){
-  .motion .ed-step p{display:none}
-  .motion .ed-steps{min-height:96px}
-  .motion .ed-scene{max-width:calc((100svh - var(--header) - 150px) * .6)}
-}
+/* Short phones: the step keeps its title and loses the paragraph. */
+@media(max-width:760px) and (max-height:700px){.motion .ed-step p{display:none}.motion .ed-steps{min-height:64px}.motion .ed-frame{width:min(100%,calc((100svh - var(--header) - 150px) * 1.6))}}

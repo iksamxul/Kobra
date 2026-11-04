@@ -80,26 +80,42 @@ export const editor = {
   title: 'Cut it together.',
   titleMuted: 'Make it move.',
   intro: 'A lightweight editor in the spirit of Premiere and After Effects, inside the player you already use. Everything renders on your device.',
+  // Each step is shown with real captures of the Editor (public/assets/screens/editor-*-dark).
   steps: [
     {
       label: 'Monitors',
       title: 'Source. Program. Timeline.',
-      body: 'Mark in and out in the source monitor and watch the edit in the program monitor. Clips land on a multi-track timeline: V2 overlays, V1, titles, A1 and A2 for music.',
+      body: 'Mark in and out in the source monitor, then insert, overlay or append. The program monitor plays the edit, built on a timeline with titles, V2, V1, A1 and A2.',
+      shot: 'editor',
+      alt: "Kobra Studio's Editor: the Media panel, the source and program monitors, and a timeline of titles and clips",
     },
     {
       label: 'Layers',
       title: 'Stack it up.',
-      body: 'Overlays sit above your footage and titles above that. Give any clip one of eight colour looks in a click, then fine-tune exposure, blur, vignette and grain.',
+      body: 'Overlays sit on V2 above your footage, titles above that. Effects holds the transitions and eight colour looks; fine-tune exposure, blur, vignette and grain per clip.',
+      shot: 'editor-layers',
+      alt: 'The Effects panel with transitions and looks, the Gatekeeper clip selected on V1',
     },
     {
       label: 'Cut',
       title: 'Trim. Razor. Ripple.',
-      body: 'Trim an edge, razor at the playhead, ripple delete the gap closed. Crossfade, dip, slide, wipe or zoom between clips.',
+      body: 'Trim an edge, razor at the playhead, close the gap. Each cut can cross dissolve, dip to black or white, slide, wipe, zoom or blur into the next clip.',
+      shot: 'editor-cut',
+      alt: 'The Razor tool selected and the Transition inspector, with a cross dissolve into the Meadow clip',
+    },
+    {
+      label: 'Motion',
+      title: 'Keyframe anything.',
+      body: 'Position, scale, rotation and opacity take keyframes at the playhead, each move with its own easing. Drag a layer right in the program monitor.',
+      shot: 'editor-inspector',
+      alt: 'The Motion inspector: position and scale with keyframe controls for the selected clip',
     },
     {
       label: 'Shape',
       title: 'Any shape. Made here.',
-      body: 'Sequences in 16:9, 9:16, 1:1 or 4:5, with speed, volume and fades for every clip. Export MP4, WebM or GIF without leaving your computer.',
+      body: 'Switch the sequence to 16:9, 9:16, 1:1 or 4:5 and the program monitor follows. Export MP4, WebM or GIF, drawn frame by frame on your computer.',
+      shot: 'editor-shape',
+      alt: 'A 9:16 sequence with the program monitor turned vertical',
     },
   ],
   keyframes: {

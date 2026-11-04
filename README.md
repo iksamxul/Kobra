@@ -34,7 +34,7 @@ Browser checks: `npx playwright install chromium`, then `npm run verify`. On Win
 | Try it | Working previews: Up next countdown, picture modes (the app's own factors), transcript, moments, open folder, history. Cards tilt with a glare. |
 | Appearance | Pinned. The frame opens (clip-path), then Midnight wipes across Pearl. |
 | Two modes | Kobra / Kobra Studio switch; each stack of screens drifts at different depths. |
-| Editor | Pinned, CSS 3D. Monitors and a multi-track timeline; the program monitor explodes into its layers; razor, ripple delete and a transition; the sequence changes shape and exports. Then an interactive keyframe demo and the capability grid. |
+| Editor | Pinned. Real captures of the Editor crossfade through five steps (monitors, layers, cut, motion, shape and export) while a highlight moves to the part each step describes (`src/editor.ts`; regions from `captures/editor-rects.json`). Then an interactive keyframe demo and the capability grid. |
 | Local-first, questions, download | Lines rise out of masks; the 3D K emblem; real release links. |
 
 Micro-interactions: magnetic primary buttons, a sliding nav indicator that follows hover and the section you are reading, sliding segmented thumbs, an animated appearance icon and a circular appearance reveal (View Transitions), focus rings throughout.
