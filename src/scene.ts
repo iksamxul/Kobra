@@ -72,7 +72,9 @@ export async function createHeroScene(host: HTMLElement, textureUrl: (theme: The
 
   const metal = new THREE.MeshPhysicalMaterial({ metalness: 1, clearcoat: .25, clearcoatRoughness: .4 });
   const glassMaterial = new THREE.MeshPhysicalMaterial({ color: 0x050506, roughness: .1, metalness: 0, clearcoat: 1, clearcoatRoughness: .04 });
-  const screenMaterial = new THREE.MeshBasicMaterial({ map: screenTexture, toneMapped: false });
+  // The screen sits a hair in front of the black glass; a polygon offset keeps it winning the depth
+  // test on phones' lower-precision depth buffers (otherwise one triangle can lose to the glass).
+  const screenMaterial = new THREE.MeshBasicMaterial({ map: screenTexture, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -8 });
   const sheenTexture = gradientTexture((context, size) => {
     const gradient = context.createLinearGradient(0, 0, size, size);
     gradient.addColorStop(0, 'rgba(255,255,255,0)'); gradient.addColorStop(.42, 'rgba(255,255,255,.0)');
@@ -154,6 +156,9 @@ export async function createHeroScene(host: HTMLElement, textureUrl: (theme: The
     const distance = midDistance * (1 - dolly * (1 - 1 / framing.cover));
     const lift = (1 - rise) * framing.startDy * (2 * midDistance * T / framing.vh);
     camera.position.set(0, lift, distance);
+    // A depth range just around the model (about 16 x 13 x 5 units) gives the depth buffer its full precision.
+    const near = Math.max(.5, distance - 14), far = distance + 14;
+    if (camera.near !== near || camera.far !== far) { camera.near = near; camera.far = far; camera.updateProjectionMatrix(); }
     camera.lookAt(0, lift, 0);
     const turn = 1 - rise;
     model.rotation.set(turn * .07 + lookY * .06, -turn * .62 + lookX * .1, turn * .02);

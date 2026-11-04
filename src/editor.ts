@@ -6,9 +6,9 @@ import { clamp, motion, onScroll, range } from './scroll';
 // recorded by the app's site capture (electron/review-site.cjs -> captures/editor-rects.json).
 type Rect = [number, number, number, number];
 const WINDOW = [1440, 900];
-const SOURCE: Rect = [337, 157, 531, 313], PROGRAM: Rect = [875, 146, 548, 329], TIMELINE: Rect = [17, 516, 1406, 355];
-const SIDE: Rect = [17, 146, 309, 370], TRACKS: Rect = [17, 586, 1406, 136], TOOLS: Rect = [17, 517, 470, 47];
-const MEADOW: Rect = [433, 682, 384, 35], SHAPE: Rect = [109, 366, 194, 34], EXPORT: Rect = [1021, 151, 390, 566];
+const SOURCE: Rect = [323, 157, 538, 313], PROGRAM: Rect = [868, 146, 555, 329], TIMELINE: Rect = [312, 516, 1111, 355];
+const SIDE: Rect = [17, 146, 295, 725], TRACKS: Rect = [312, 588, 1111, 166], TOOLS: Rect = [312, 517, 470, 47];
+const MEADOW: Rect = [728, 702, 384, 45], SHAPE: Rect = [109, 366, 190, 34], EXPORT: Rect = [1021, 151, 390, 566];
 const BEATS: { shot: string; rect: Rect }[][] = [
   [{ shot: 'editor', rect: SOURCE }, { shot: 'editor', rect: PROGRAM }, { shot: 'editor', rect: TIMELINE }],
   [{ shot: 'editor-layers', rect: TRACKS }, { shot: 'editor-layers', rect: SIDE }],

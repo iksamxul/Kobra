@@ -28,6 +28,9 @@ let frame = 0, stale = true;
 // Pinned sections are sized in viewport units, so a resize moves every scroll position.
 // The pinned scene being read is remembered before the resize and its progress restored.
 let anchor: { scene: Scene; progress: number } | null = null;
+// Phones resize the viewport's height whenever the address bar shows or hides during a scroll;
+// only a width change is a real layout change worth re-anchoring (scrolling back would fight the finger).
+let anchorWidth = innerWidth;
 
 export function onScroll(element: Element, kind: Kind, update: Scene['update'], options: Options = {}) {
   scenes.push({ element, kind, update, last: NaN, ...options });
@@ -71,7 +74,9 @@ function run() {
 window.addEventListener('scroll', schedule, { passive: true });
 window.addEventListener('resize', () => {
   // Resize events run before this frame's scroll events, so `last` is still the old progress.
-  if (!anchor) {
+  const widthChanged = innerWidth !== anchorWidth;
+  anchorWidth = innerWidth;
+  if (widthChanged && !anchor) {
     const scene = scenes.find(item => item.kind === 'pin' && item.last > 0 && item.last < 1);
     if (scene) anchor = { scene, progress: scene.last };
   }
