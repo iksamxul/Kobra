@@ -17,9 +17,9 @@ Read `README.md` (structure, scripts, rules) and `DESIGN.md` (visual intent, mot
 
 ## Open items
 
-1. **Captures.** Every screen is interim (1920×1200 enlarged). Produce the 2880×1800 captures in `public/assets/screens/MANIFEST.md`, drop them in `captures/`, run `npm run screens`, then check `node tests/capture.mjs`.
-2. **Feature bar.** When its screens exist, set `capture: true` per tab in `src/content.ts`. Verify every claim in that file against the shipped app; it is the only place the new features are described.
-3. **Release.** Downloads point at v2.1.0, which does not include the feature bar or the new Editor; `upcoming.show` keeps the "Coming in the next update" badge on those sections. When a release with them is published, update `src/config.ts`, the static links in `index.html`, and set `upcoming.show` to false.
+1. **Captures.** Done: real 2880×1800 captures from the app (`KOBRA_REVIEW_SCALE=2 electron . --review-site` in the app repo, then `npm run screens`). Recapture when the app's look changes.
+2. **Feature bar.** Done: every tab has `capture: true`. Re-verify the claims in `src/content.ts` against the app whenever it changes; it is the only place those features are described.
+3. **Release.** Done: downloads point at v1.0.0 (Kobra 1.0, which contains the feature bar and the new Editor) and `upcoming.show` is false. For a new release, update `src/config.ts`, the static links in `index.html` and the URLs in `tests/showcase.spec.ts`.
 4. Do not claim universal codec support, AI sound separation or automatic transcription (the transcript comes from subtitle files).
 
 ## Completion bar

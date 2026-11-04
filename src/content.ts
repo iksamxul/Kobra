@@ -1,19 +1,19 @@
 /*
  * ─── CLAIMS TO VERIFY ───────────────────────────────────────────────────────────
- * Every word the page says about features that are still being built in the desktop
- * app lives in this file: Kobra's new feature bar, the new Editor and their FAQ answers.
+ * Every word the page says about Kobra's feature bar, the Editor and their FAQ answers
+ * lives in this file. They shipped in Kobra 1.0 (GitHub Release v1.0.0).
  * Edit claims here only. vite.config.ts writes them into index.html during dev and build,
  * so they are part of the static page and work without JavaScript.
  *
- * - `upcoming.show`: while true, both sections carry the `upcoming.label` badge, because the
- *   download (v2.1.0) does not contain these features yet. Set it to false once a release
- *   that includes them is the one in src/config.ts.
+ * - `upcoming.show`: while true, both sections carry the `upcoming.label` badge. Use it only
+ *   while the download in src/config.ts lacks the features described here. It is false
+ *   because v1.0.0 contains them.
  * - `capture`: false shows the illustrated panel; true shows the real screenshot
  *   public/assets/screens/featurebar-<id>-{light,dark}-{1440,2880}.webp (see MANIFEST.md).
  * ────────────────────────────────────────────────────────────────────────────────
  */
 
-export const upcoming = { show: true, label: 'Coming in the next update' };
+export const upcoming = { show: false, label: 'Coming in the next update' };
 
 export interface FeatureTab {
   id: 'watch' | 'clips' | 'convert' | 'scenes' | 'listen' | 'insights';

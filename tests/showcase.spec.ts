@@ -1,9 +1,9 @@
 import { test, expect, type Page } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 
-const SETUP = 'https://github.com/iksamxul/Kobra/releases/download/v2.1.0/Kobra-Setup-2.1.0.exe';
-const PORTABLE = 'https://github.com/iksamxul/Kobra/releases/download/v2.1.0/Kobra-Portable-2.1.0.exe';
-const NOTES = 'https://github.com/iksamxul/Kobra/releases/tag/v2.1.0';
+const SETUP = 'https://github.com/iksamxul/Kobra/releases/download/v1.0.0/Kobra-Setup-1.0.0.exe';
+const PORTABLE = 'https://github.com/iksamxul/Kobra/releases/download/v1.0.0/Kobra-Portable-1.0.0.exe';
+const NOTES = 'https://github.com/iksamxul/Kobra/releases/tag/v1.0.0';
 
 /** Scroll so a pinned section is at the given progress (0 = pin starts, 1 = pin ends). */
 const scrollToProgress = (page: Page, selector: string, progress: number) => page.evaluate(([s, p]) => {
