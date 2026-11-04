@@ -83,7 +83,7 @@ python scripts/screens.py --captures D:/caps  # another capture folder
 
 Copy for the feature bar and the Editor lives only in `src/content.ts`. `upcoming.show` puts a "Coming in the next update" badge on those sections; it is false because the linked download (1.0.0) contains them. Turn it on only for copy that runs ahead of the linked release. Set `capture: true` per tab once its screenshots exist.
 
-Version 1.0.0 is published at https://github.com/iksamxul/Kobra/releases/tag/v1.0.0 (an older 2.1.0 preview, from when development builds were numbered 2.x, is also listed), and `setupUrl`, `portableUrl` and `notesUrl` in `src/config.ts` point at it; the same links are in `index.html` for the no-JavaScript page. For a new release, upload the verified installers to a new GitHub Release and update both places. Empty URLs show an honest "Public download links are being prepared" message. Do not add Windows executables to this repository.
+Version 1.0.0 is published at https://github.com/iksamxul/Kobra/releases/tag/v1.0.0 (the only release; an earlier 2.1.0 preview, from when development builds were numbered 2.x, was removed), and `setupUrl`, `portableUrl` and `notesUrl` in `src/config.ts` point at it; the same links are in `index.html` for the no-JavaScript page. For a new release, upload the verified installers to a new GitHub Release and update both places. Empty URLs show an honest "Public download links are being prepared" message. Do not add Windows executables to this repository.
 
 ## GitHub Pages
 
