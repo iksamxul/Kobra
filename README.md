@@ -30,6 +30,9 @@ Development and preview default to `http://127.0.0.1:4173`. When working in the 
 - Lazy WebGL loading; HTML image fallback on reduced motion or unsupported WebGL.
 - Native-scroll, three-stage sticky sequence with synchronized text and screenshots.
 - Interactive Kobra/Studio preview, bookmark demonstration, reveal animations and hover/press feedback.
+- "Kobra, expanded": the My videos panel, plus working previews of Up next (cancellable countdown), picture modes (the app's exact filter factors), transcript, open folder and history.
+- Editor sequence: an exploded glass stack where clips gather from Segments, Moments and Shots into one timeline, the playhead splits a clip, and the outputs (MP4, SRT, EDL, chapters, Projects, Delivery) appear. Scroll position alone drives it.
+- 3D Kobra emblem in the download section, extruded from the logo's own path with studio reflections; it rises and turns with scroll.
 - Reduced-motion layout that presents every story step without requiring scrolling through a pinned animation.
 - Self-hosted images, system fonts, semantic content and keyboard-accessible controls.
 - GitHub Pages workflow; pull requests build without deploying.
@@ -44,6 +47,9 @@ Development and preview default to `http://127.0.0.1:4173`. When working in the 
 | `src/motion.css` | Micro-interactions, reveals and reduced-motion behavior |
 | `src/main.ts` | Theme, mode preview, scroll choreography and release links |
 | `src/scene.ts` | Procedural 3D model, lighting, interaction and GPU cleanup |
+| `src/sections.ts`, `src/sections.css` | "Kobra, expanded" previews, Editor sequence and their reduced-motion states |
+| `src/emblem.ts` | 3D Kobra emblem built from the logo geometry, lazy-loaded with fallback |
+| `tests/capture.mjs` | Section screenshots at any width/theme for visual review |
 | `src/config.ts` | Release version/URLs and mode-specific content |
 | `public/assets/` | Real app screenshots, artwork and social image |
 | `.github/workflows/pages.yml` | Build and Pages deployment |
@@ -53,7 +59,7 @@ Development and preview default to `http://127.0.0.1:4173`. When working in the 
 
 Fill `setupUrl` and `portableUrl` in `src/config.ts` with the real public **HTTPS GitHub Release asset URLs**. Empty URLs show an honest “Public download links are being prepared” message. No fake download buttons or local paths are published. Do not add large Windows executables to this website repository.
 
-The application currently identifies itself as 2.1.0; the newest app-only Editor and additional library changes were still under review when this website was created. Homepage claims emphasize the documented two-mode release. Verify a new app release before changing claims or download URLs.
+The application identifies itself as 2.1.0. Every feature on the page is in that build and covered by its tests: the seven Kobra additions and the Editor have their own smoke checks, and an optional networked render check confirms the Editor's MP4 export (a two-video edit renders to a playable 1280×720 MP4). Verify a new app release before changing claims or download URLs.
 
 ## GitHub Pages
 
@@ -69,6 +75,9 @@ The WebP screens were resized to 1440 px wide from the desktop application's `re
 - `tools-dark.webp` → `dark-wide-kobra-11-tools-video.png`
 - `home-{light,dark}.webp` → `{light,dark}-wide-kobra-12-home-continue.png`
 - `studio-{light,dark}.webp` → `{light,dark}-wide-studio-13-media-studio.png`
+- `upnext-{light,dark}.webp` → `{light,dark}-wide-kobra-23-up-next.png`
+- `editor-{light,dark}.webp` → `{light,dark}-wide-studio-16-editor.png`
+- `bunny-poster.jpg`, `flower-poster.jpg` → desktop `public/`
 - `kobra.svg` → desktop `build/icon.svg`
 - `sintel-poster.jpg` → desktop `public/sintel-poster.jpg`
 

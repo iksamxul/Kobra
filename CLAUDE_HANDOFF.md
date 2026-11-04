@@ -12,6 +12,10 @@ Keep the current direction: **quiet, editorial, premium**. Pearl white and silve
 
 ### Already implemented
 
+- "Kobra, expanded" bento: the My videos panel capture plus working previews of Up next, picture modes (the app's exact factors), transcript, open folder and history.
+- Editor sequence: exploded glass layers; clips gather from Segments, Moments and Shots into one timeline, the playhead splits a clip, the outputs appear.
+- 3D Kobra emblem in the download section, extruded from the logo path, lazy-loaded with the SVG as fallback.
+
 - Hero with real app screenshot on a procedural 3D metallic display, lazy-loaded as a separate chunk. Scroll and pointer move the display, with no idle animation loop.
 - Sticky, three-stage native-scroll story: settle in → make it yours → go deeper.
 - Working Kobra/Studio preview and Pearl/Midnight theme switch.
@@ -26,7 +30,7 @@ Keep the current direction: **quiet, editorial, premium**. Pearl white and silve
 2. Refine the 3D product choreography. A custom Kobra logo model or an exploded glass-interface sequence could add a signature moment; keep it legible and lightweight. Preserve a useful non-WebGL fallback.
 3. Refine section pacing, screen crops, typography and micro-interactions. Motion should explain an interaction or direct attention, not compete with the video content. Use native scrolling; do not hijack wheel or touch input.
 4. Prefer real current app screenshots to drawn mock interfaces. The supplied screens include demo data. Remove obsolete screenshots only after replacements are verified.
-5. The newest desktop Editor/MP4 export work was still under review. Verify what actually ships before marketing it. Do not claim universal codec support, AI sound separation, transcription or full PotPlayer parity.
+5. The Editor and MP4 export are verified in the desktop build (`npm run test:render` in the app renders a two-video edit to a playable 1280×720 MP4; it needs network once for the FFmpeg core). Do not claim universal codec support, AI sound separation, automatic transcription (the transcript comes from subtitle files) or full PotPlayer parity.
 6. Configure download links only after real public application release assets exist. Do not turn “Get Kobra” into a dead link or upload app executables to git.
 7. Verify keyboard use, reduced motion, touch, no-WebGL, missing image fallback, both themes and both mode previews. Keep all three scroll-story paragraphs visible in the reduced-motion layout.
 8. Run `npm run build`. Check the production build, including credits and asset paths under `/Kobra/`. Inspect console/network errors and screenshots at 1440, 1024, 768, 390 and 320 px widths.

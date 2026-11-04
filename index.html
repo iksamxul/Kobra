@@ -23,7 +23,7 @@
     <header class="site-header">
       <nav class="nav wrap" aria-label="Main navigation">
         <a class="brand" href="#" aria-label="Kobra home"><img src="./assets/kobra.svg" width="30" height="30" alt="" /><span>Kobra<span class="brand-dot">.</span></span></a>
-        <div class="nav-links"><a href="#experience">Experience</a><a href="#modes">Two modes</a><a href="#details">The details</a></div>
+        <div class="nav-links"><a href="#experience">Experience</a><a href="#everyday">What's new</a><a href="#modes">Two modes</a><a href="#editor">Editor</a><a href="#details">The details</a></div>
         <div class="nav-actions"><button class="theme-toggle" type="button" aria-label="Switch to Midnight appearance" title="Switch appearance"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor"/></svg></button><a class="button button-small" href="#download">Get Kobra <span aria-hidden="true">↗</span></a></div>
       </nav>
       <div class="reading-progress" aria-hidden="true"></div>
@@ -75,12 +75,95 @@
         </div>
       </section>
 
+      <section class="expanded-section section-space" id="everyday" aria-labelledby="everyday-title">
+        <div class="wrap">
+          <div class="section-heading reveal"><div><p class="eyebrow">KOBRA, EXPANDED.</p><h2 id="everyday-title">More to come back to.<br/><span>Nothing new to learn.</span></h2></div><p class="section-description">Seven everyday additions.<br/>All on your device, right where you'd look.</p></div>
+          <div class="bento">
+            <article class="bento-card panel-card reveal">
+              <div class="panel-copy"><div class="feature-top"><span class="feature-label">MY VIDEOS, NOW A PANEL</span><span aria-hidden="true">↗</span></div><h3>Everything you watch.<br/><span>Neatly in its place.</span></h3><p>Up next, History and every saved moment sit beside your library. Smart lists gather what's unfinished, not started, finished, short or long.</p>
+                <ul class="chip-row" aria-label="Sections in My videos"><li>Up next</li><li>History</li><li>Moments</li><li>Unfinished</li><li>Not started</li><li>Finished</li><li>Short</li><li>Long</li></ul></div>
+              <div class="panel-shot"><img data-themed="upnext" src="./assets/upnext-light.webp" width="1440" height="900" loading="lazy" alt="Kobra's My videos panel with Up next selected: the video playing now and two videos queued after it"/></div>
+            </article>
+            <article class="bento-card upnext-card reveal">
+              <div class="feature-top"><span class="feature-label">UP NEXT</span><span aria-hidden="true">05</span></div>
+              <div class="countdown-demo" data-state="idle">
+                <div class="countdown-frame"><img class="ending" src="./assets/sintel-poster.jpg" width="640" height="360" loading="lazy" alt="The last frame of the Sintel sample film"/><img class="following" src="./assets/bunny-poster.jpg" width="640" height="360" loading="lazy" alt=""/>
+                  <div class="countdown-card"><svg class="countdown-ring" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><circle class="ring-fill" cx="20" cy="20" r="17" pathLength="100"/></svg><div><small><span class="countdown-label">Up next in</span> <b class="countdown-number">5</b></small><strong>Big Buck Bunny</strong></div></div></div>
+                <div class="demo-actions"><button type="button" class="pill" data-countdown="play">Play now</button><button type="button" class="pill quiet" data-countdown="cancel">Cancel</button><button type="button" class="pill quiet" data-countdown="replay" hidden>Watch it again</button></div>
+                <span class="demo-label" id="countdown-status" aria-live="polite">INTERACTION PREVIEW</span>
+              </div>
+              <h3>The next one,<br/>already lined up.</h3><p>Queue a few videos and they play in order. When one ends, a five-second countdown you can cancel.</p>
+            </article>
+            <article class="bento-card picture-card reveal">
+              <div class="feature-top"><span class="feature-label">PICTURE MODES</span><span aria-hidden="true">◐</span></div>
+              <div class="picture-demo"><div class="picture-frame"><img id="picture-image" src="./assets/flower-poster.jpg" width="640" height="360" loading="lazy" alt="A flower from the sample clip, shown in the selected picture mode"/></div>
+                <div class="segmented-demo" role="group" aria-label="Preview a picture mode"><button type="button" data-picture="standard" aria-pressed="true">Standard</button><button type="button" data-picture="vivid" aria-pressed="false">Vivid</button><button type="button" data-picture="cinema" aria-pressed="false">Cinema</button><button type="button" data-picture="soft" aria-pressed="false">Soft</button></div>
+                <p class="picture-detail" id="picture-detail" aria-live="polite">As the video was made.</p></div>
+              <h3>Vivid, or easy<br/>on the eyes.</h3><p>Four picture modes for every video, with the same settings as the app. Standard turns them off.</p>
+            </article>
+            <article class="bento-card transcript-card reveal">
+              <div class="feature-top"><span class="feature-label">TRANSCRIPT</span><span aria-hidden="true">CC</span></div>
+              <div class="transcript-demo"><label class="mini-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg><input type="search" placeholder="Search words" aria-label="Search the transcript preview"/></label>
+                <ol class="transcript-list" aria-label="Transcript preview">
+                  <li><button type="button" data-line="0" aria-current="true"><time>0:02</time><span>The light comes up over the hills.</span></button></li>
+                  <li><button type="button" data-line="1"><time>0:07</time><span>Someone has been waiting a long time.</span></button></li>
+                  <li><button type="button" data-line="2"><time>0:13</time><span>A door opens onto the snow.</span></button></li>
+                  <li><button type="button" data-line="3"><time>0:19</time><span>Not a word, just the wind.</span></button></li>
+                  <li><button type="button" data-line="4"><time>0:24</time><span>And then the music finds them.</span></button></li>
+                </ol><div class="transcript-progress" aria-hidden="true"><i></i></div></div>
+              <h3>Read along.<br/>Jump to the line.</h3><p>Subtitles become a transcript beside the video. The current line follows playback, and any line takes you there.</p>
+            </article>
+            <article class="bento-card folder-card reveal">
+              <div class="feature-top"><span class="feature-label">OPEN FOLDER</span><span aria-hidden="true">⌘</span></div>
+              <div class="folder-demo" aria-hidden="true"><div class="folder-back"></div><span class="folder-file" style="--i:0"><i></i>Holiday 2026.mp4</span><span class="folder-file" style="--i:1"><i></i>Recital.mov</span><span class="folder-file" style="--i:2"><i></i>Lecture 04.mkv</span><span class="folder-file" style="--i:3"><i></i>Trailer.webm</span><div class="folder-front"><span>Videos</span></div></div>
+              <h3>A whole folder.<br/>One click.</h3><p>Every video in a folder joins My videos, in natural order. Nothing is moved or copied.</p>
+            </article>
+            <article class="bento-card history-card reveal">
+              <div class="history-copy"><div class="feature-top"><span class="feature-label">HISTORY</span><span aria-hidden="true">↺</span></div><h3>Pick up anywhere.</h3><p>History remembers how far you got, newest first. Remove an entry and Kobra forgets its position, too. It never leaves your device.</p></div>
+              <ul class="history-demo" aria-label="History preview">
+                <li><img src="./assets/bunny-poster.jpg" alt="" width="64" height="36" loading="lazy"/><span><strong>Big Buck Bunny</strong><small>Today · Stopped at 0:21 of 0:33</small></span><i style="--w:.64"></i></li>
+                <li><img src="./assets/sintel-poster.jpg" alt="" width="64" height="36" loading="lazy"/><span><strong>Sintel</strong><small>Today · Finished</small></span><i style="--w:1"></i></li>
+                <li><img src="./assets/flower-poster.jpg" alt="" width="64" height="36" loading="lazy"/><span><strong>Flower</strong><small>Yesterday · Opened</small></span><i style="--w:.08"></i></li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="modes-section section-space" id="modes" aria-labelledby="modes-title">
         <div class="wrap">
           <div class="section-heading reveal"><div><p class="eyebrow">SAME KOBRA. DIFFERENT HEADSPACE.</p><h2 id="modes-title">Watch something.<br/><span>Make something of it.</span></h2></div><p class="section-description">One app. Two ways to spend your time.<br/>Switch your mode, not your momentum.</p></div>
           <div class="mode-controls reveal" role="group" aria-label="Preview an application mode"><button type="button" data-mode="kobra" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3Z"/></svg>Kobra</button><button type="button" data-mode="studio" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Kobra Studio</button></div>
           <div class="mode-preview reveal"><div class="preview-topline"><span><i></i><i></i><i></i></span><span id="preview-label">A little more everyday.</span><span class="preview-tag">APP PREVIEW</span></div><div class="mode-images"><img id="mode-kobra" class="is-active" src="./assets/home-light.webp" width="1440" height="900" loading="lazy" alt="Kobra Home with continue watching and recently opened videos"/><img id="mode-studio" src="./assets/studio-light.webp" width="1440" height="900" loading="lazy" alt="Kobra Studio with collections and media review tools"/></div></div>
           <div class="mode-summary" aria-live="polite"><h3 id="mode-title">A home for your next watch.</h3><p id="mode-description">Pick up where you left off, find a favorite, or make yourself comfortable with everyday tools.</p><span id="mode-features">Home · Watch · My videos · Tools</span></div>
+        </div>
+      </section>
+
+      <section class="editor-section" id="editor" aria-labelledby="editor-title">
+        <div class="editor-sticky wrap">
+          <div class="editor-copy">
+            <p class="eyebrow"><span class="status-dot"></span> NEW IN KOBRA STUDIO</p>
+            <h2 id="editor-title">Cut it together.<br/><span>Keep it in sync.</span></h2>
+            <ol class="editor-steps">
+              <li class="editor-step is-active"><span class="step-number">01 / GATHER</span><h3>Bring in what you marked.</h3><p>Media Studio segments, saved moments and Projects shots arrive as clips. Bring them in twice and nothing doubles up.</p></li>
+              <li class="editor-step"><span class="step-number">02 / SHAPE</span><h3>Trim. Split. Reorder.</h3><p>Set in and out from the playhead, split with S, then play the whole edit across videos in the preview above.</p></li>
+              <li class="editor-step"><span class="step-number">03 / SEND</span><h3>Ready for what's next.</h3><p>Render an MP4 on your device. Subtitles follow the cut. Hand off an edit list, chapters, shots for Projects and a review step for Delivery.</p></li>
+            </ol>
+            <div class="story-dots editor-dots" aria-hidden="true"><span class="is-active"></span><span></span><span></span></div>
+          </div>
+          <div class="editor-visual" role="img" aria-label="Kobra Studio's Editor: clips from different videos assemble into one timeline beneath the preview, then export as MP4, subtitles, an edit list and chapters.">
+            <div class="editor-stage">
+              <div class="editor-layer editor-shot"><img data-themed="editor" src="./assets/editor-dark.webp" width="1440" height="900" loading="lazy" alt=""/></div>
+              <div class="editor-layer editor-timeline" aria-hidden="true">
+                <div class="tl-head"><span>TRAILER CUT</span><span class="tl-time">0:00 / 0:25</span></div>
+                <div class="tl-track"><span class="tl-clip" data-from="segments" style="--c:#6f8fbf;--g:7"><b>Gatekeeper</b><small>Sintel · 7.0 s</small></span><span class="tl-clip" data-from="moments" style="--c:#8fae7a;--g:4"><b>Meadow</b><small>Bunny · 4.0 s</small></span><span class="tl-clip tl-split" data-from="moments" style="--c:#8fae7a;--g:4"><b>Wake-up</b><small>Bunny · 4.0 s</small></span><span class="tl-clip" data-from="shots" style="--c:#c29a5b;--g:6"><b>Snow storm</b><small>Sintel · 6.0 s</small></span><span class="tl-clip" data-from="shots" style="--c:#a67fb8;--g:4"><b>Bloom</b><small>Flower · 4.0 s</small></span><span class="tl-playhead"></span></div>
+                <div class="tl-ruler"><span>0:00</span><span>0:12</span><span>0:25</span></div>
+              </div>
+              <div class="editor-sources" aria-hidden="true"><span data-source="segments">SEGMENTS</span><span data-source="moments">MOMENTS</span><span data-source="shots">SHOTS</span></div>
+              <div class="editor-exports" aria-hidden="true"><span>MP4</span><span>SRT</span><span>EDL</span><span>Chapters</span><span>Projects</span><span>Delivery</span></div>
+            </div>
+            <span class="story-caption"><span class="status-dot"></span> ONE PLAYER. ONE TIMELINE. ALL IN SYNC.</span>
+          </div>
         </div>
       </section>
 
@@ -96,12 +179,12 @@
 
       <section class="quiet-section section-space"><div class="wrap quiet-content"><div class="quiet-symbol reveal" aria-hidden="true"><svg viewBox="0 0 64 64"><rect x="14" y="27" width="36" height="28" rx="9"/><path d="M22 27V19a10 10 0 0 1 20 0v8"/><circle cx="32" cy="40" r="2"/><path d="M32 42v4"/></svg></div><p class="eyebrow reveal">A SPACE THAT'S YOURS.</p><h2 class="reveal">Your library.<br/>Your device. <span>Your business.</span></h2><p class="section-description reveal">Kobra keeps your library and workspaces local.<br/>No account to create. No feed to catch up with.<br/>Just the things you came to watch.</p><p class="fine-print reveal">Remote videos and optional compatibility downloads still use the internet.</p></div></section>
 
-      <section class="faq-section wrap section-space" aria-labelledby="faq-title"><div class="section-heading reveal"><h2 id="faq-title">A few good questions.</h2><span class="eyebrow">BEFORE YOU PRESS PLAY.</span></div><div class="faq-list reveal"><details><summary>What is Kobra?<span aria-hidden="true">+</span></summary><p>A local-first video player for Windows, with a quiet liquid-glass interface, everyday viewing tools, and a connected set of creative workspaces in Kobra Studio.</p></details><details><summary>What's the difference between Kobra and Kobra Studio?<span aria-hidden="true">+</span></summary><p>Kobra is for everyday watching: Home, Watch, My videos and Tools. Kobra Studio adds media review, projects, research, writing, study, delivery and advanced playback controls. Both modes share the same player and your files.</p></details><details><summary>Does it play every video format?<span aria-hidden="true">+</span></summary><p>Playback depends on the codecs supported by the app's Chromium engine. Some local files can use an optional FFmpeg compatibility conversion, with a 512 MB input limit. Kobra does not claim universal codec support or full PotPlayer parity.</p></details><details><summary>Can I use it without an account?<span aria-hidden="true">+</span></summary><p>Yes. Your local videos and workspaces don't need a Kobra account. Network streams and the first optional compatibility-core download need an internet connection.</p></details></div></section>
+      <section class="faq-section wrap section-space" aria-labelledby="faq-title"><div class="section-heading reveal"><h2 id="faq-title">A few good questions.</h2><span class="eyebrow">BEFORE YOU PRESS PLAY.</span></div><div class="faq-list reveal"><details><summary>What is Kobra?<span aria-hidden="true">+</span></summary><p>A local-first video player for Windows, with a quiet liquid-glass interface, everyday viewing tools, and a connected set of creative workspaces in Kobra Studio.</p></details><details><summary>What's the difference between Kobra and Kobra Studio?<span aria-hidden="true">+</span></summary><p>Kobra is for everyday watching: Home, Watch, My videos and Tools. Kobra Studio adds media review, an editor, projects, research, writing, study, delivery and advanced playback controls. Both modes share the same player and your files.</p></details><details><summary>Can I edit videos in Kobra?<span aria-hidden="true">+</span></summary><p>Yes, simple cuts. Kobra Studio's Editor arranges clips from your videos into one edit and renders an MP4 on your device, up to 30 minutes long. The rendering engine (FFmpeg) downloads once, the first time you render. Your source files are never changed.</p></details><details><summary>Does it play every video format?<span aria-hidden="true">+</span></summary><p>Playback depends on the codecs supported by the app's Chromium engine. Some local files can use an optional FFmpeg compatibility conversion, with a 512 MB input limit. Kobra does not claim universal codec support or full PotPlayer parity.</p></details><details><summary>Can I use it without an account?<span aria-hidden="true">+</span></summary><p>Yes. Your local videos and workspaces don't need a Kobra account. Network streams and the first optional compatibility-core download need an internet connection.</p></details></div></section>
 
-      <section class="download-section" id="download" aria-labelledby="download-title"><div class="wrap download-inner"><img class="download-icon reveal" src="./assets/kobra.svg" alt="" width="88" height="88"/><p class="eyebrow reveal">MAKE A LITTLE ROOM FOR KOBRA.</p><h2 id="download-title" class="reveal">Your next watch<br/><span>starts here.</span></h2><p class="section-description reveal">A quieter kind of player. Made for Windows.</p><div class="release-actions reveal" id="release-actions"><p class="release-pending">Public download links are being prepared.</p></div><p class="release-note" id="release-note">Windows x64 · Local-first · Pearl & Midnight</p><a class="text-link back-to-top" href="#">Back to the beginning <span aria-hidden="true">↑</span></a></div></section>
+      <section class="download-section" id="download" aria-labelledby="download-title"><div class="wrap download-inner"><div class="emblem-stage reveal" id="emblem-stage" aria-hidden="true"><img class="download-icon" src="./assets/kobra.svg" alt="" width="88" height="88"/></div><p class="eyebrow reveal">MAKE A LITTLE ROOM FOR KOBRA.</p><h2 id="download-title" class="reveal">Your next watch<br/><span>starts here.</span></h2><p class="section-description reveal">A quieter kind of player. Made for Windows.</p><div class="release-actions reveal" id="release-actions"><p class="release-pending">Public download links are being prepared.</p></div><p class="release-note" id="release-note">Windows x64 · Local-first · Pearl & Midnight</p><a class="text-link back-to-top" href="#">Back to the beginning <span aria-hidden="true">↑</span></a></div></section>
     </main>
     <footer class="site-footer wrap"><a class="brand" href="#"><img src="./assets/kobra.svg" width="24" height="24" alt=""/><span>Kobra.</span></a><p>Less in the way. More to get lost in.</p><div><span>Independent software. Thoughtfully made.</span><a href="./credits.html">Credits</a></div></footer>
-    <noscript><style>.reveal{opacity:1!important;transform:none!important}.scroll-story{min-height:0!important}.story-sticky{position:relative!important;height:auto!important;min-height:0!important;padding-block:80px}.story-steps{display:block!important;height:auto!important}.story-step{position:relative!important;opacity:1!important;visibility:visible!important;transform:none!important;margin-bottom:40px}.story-step:not(:first-child){display:block!important}.story-dots,.mode-controls,.theme-toggle,.appearance-try,.save-moment{display:none!important}</style></noscript>
+    <noscript><style>.reveal{opacity:1!important;transform:none!important}.scroll-story{min-height:0!important}.story-sticky{position:relative!important;height:auto!important;min-height:0!important;padding-block:80px}.story-steps{display:block!important;height:auto!important}.story-step{position:relative!important;opacity:1!important;visibility:visible!important;transform:none!important;margin-bottom:40px}.story-step:not(:first-child){display:block!important}.editor-section{min-height:0!important}.editor-sticky{position:relative!important;height:auto!important;min-height:0!important;padding-block:80px}.editor-step{position:relative!important;opacity:1!important;visibility:visible!important;transform:none!important}.editor-dots,.segmented-demo,.demo-actions,.mini-search{display:none!important}.story-dots,.mode-controls,.theme-toggle,.appearance-try,.save-moment{display:none!important}</style></noscript>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

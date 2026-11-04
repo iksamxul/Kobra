@@ -1,5 +1,6 @@
 import './style.css';
 import { modes, release } from './config';
+import { initSections, themedImages } from './sections';
 
 const $ = <T extends Element = HTMLElement>(selector: string) => document.querySelector<T>(selector)!;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -14,6 +15,7 @@ function updateThemeAssets() {
   $('meta[name="theme-color"]').setAttribute('content', dark ? '#111113' : '#f5f5f7');
   $('#mode-kobra').setAttribute('src', asset(`home-${theme}.webp`));
   $('#mode-studio').setAttribute('src', asset(`studio-${theme}.webp`));
+  themedImages(theme);
 }
 function toggleTheme() {
   document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -136,3 +138,15 @@ const sceneObserver = new IntersectionObserver(entries => {
   });
 }, { rootMargin: '300px' });
 sceneObserver.observe(stage);
+
+initSections();
+
+// The download mark becomes a 3D emblem when it comes near; the image stays as its fallback.
+const emblem = $('#emblem-stage');
+let emblemStarted = false;
+const emblemObserver = new IntersectionObserver(entries => {
+  if (!entries.some(entry => entry.isIntersecting) || emblemStarted || reducedMotion.matches) return;
+  emblemStarted = true;
+  void import('./emblem').then(module => module.createEmblem(emblem)).catch(() => { emblem.dataset.renderer = 'fallback'; });
+}, { rootMargin: '400px' });
+emblemObserver.observe(emblem);

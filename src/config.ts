@@ -18,6 +18,6 @@ export const modes = {
     label: 'A little more possibility.',
     title: 'Give your ideas somewhere to go.',
     description: 'Collect a reference, write a scene, plan a project. Connected workspaces, one familiar player.',
-    features: 'Media Studio · Projects · Research · Writing · Study · Delivery · Playback Lab',
+    features: 'Media Studio · Editor · Projects · Research · Writing · Study · Delivery · Playback Lab',
   },
 };
