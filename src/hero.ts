@@ -83,6 +83,8 @@ export function initHero(currentTheme: () => Theme) {
         measure();
         scene.setFraming(framing);
         update(progress);
+        // After the 3D view has faded in, the hand-off follows scroll exactly (no lagging fades).
+        setTimeout(() => stage.classList.add('is-settled'), 1000);
       })
       .catch(() => { stage.dataset.renderer = 'fallback'; });
   };

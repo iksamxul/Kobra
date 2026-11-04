@@ -47,6 +47,9 @@ summary:hover>span{background:var(--field)}
 /* Reveals on first sight. */
 .motion .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform 1.1s var(--ease)}
 .motion .reveal.is-visible{opacity:1;transform:none}
+/* Revealed cards keep their tilt (the reveal's transform:none would cancel it). */
+.motion .tilt.reveal.is-visible{transform:perspective(1100px) rotateX(calc(var(--ty,0) * -3.2deg)) rotateY(calc(var(--tx,0) * 4deg)) translateZ(0);transition:opacity .9s ease,transform .7s var(--ease),box-shadow .5s ease}
+.motion .tilt.reveal.is-visible.is-tilting{transition:opacity .9s ease,transform .14s linear,box-shadow .5s ease}
 .motion .lines>span{opacity:0;transform:translateY(.45em);transition:opacity .9s ease,transform 1.1s var(--ease)}
 .motion .lines>span+span{transition-delay:.1s}
 .motion .lines.is-visible>span{opacity:1;transform:none}

@@ -25,6 +25,9 @@ interface Scene extends Options { element: Element; kind: Kind; update: (progres
 
 const scenes: Scene[] = [];
 let frame = 0, stale = true;
+// Pinned sections are sized in viewport units, so a resize moves every scroll position.
+// The pinned scene being read is remembered before the resize and its progress restored.
+let anchor: { scene: Scene; progress: number } | null = null;
 
 export function onScroll(element: Element, kind: Kind, update: Scene['update'], options: Options = {}) {
   scenes.push({ element, kind, update, last: NaN, ...options });
@@ -43,6 +46,13 @@ function run() {
   if (stale) {
     stale = false;
     for (const scene of scenes) { scene.last = NaN; if (animated || scene.always) scene.measure?.(); }
+    if (anchor && animated) {
+      const { scene, progress } = anchor;
+      const rect = scene.element.getBoundingClientRect();
+      const top = scrollY + rect.top + progress * Math.max(1, rect.height - innerHeight);
+      if (Math.abs(top - scrollY) > 1) scrollTo({ top, behavior: 'instant' });
+    }
+    anchor = null;
   }
   const vh = innerHeight;
   const active = scenes.filter(scene => animated || scene.always);
@@ -59,7 +69,14 @@ function run() {
 }
 
 window.addEventListener('scroll', schedule, { passive: true });
-window.addEventListener('resize', refresh);
+window.addEventListener('resize', () => {
+  // Resize events run before this frame's scroll events, so `last` is still the old progress.
+  if (!anchor) {
+    const scene = scenes.find(item => item.kind === 'pin' && item.last > 0 && item.last < 1);
+    if (scene) anchor = { scene, progress: scene.last };
+  }
+  refresh();
+});
 reducedMotion.addEventListener('change', () => {
   document.documentElement.classList.toggle('motion', !reducedMotion.matches);
   if (reducedMotion.matches) scenes.forEach(scene => scene.reset?.());

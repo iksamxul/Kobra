@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { webglAvailable } from './webgl';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import type { Theme } from './images';
@@ -38,6 +39,7 @@ function gradientTexture(draw: (context: CanvasRenderingContext2D, size: number)
 }
 
 export async function createHeroScene(host: HTMLElement, textureUrl: (theme: Theme) => string, initialTheme: Theme): Promise<HeroScene> {
+  if (!webglAvailable()) throw new Error('WebGL is unavailable');
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;

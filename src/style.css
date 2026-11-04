@@ -86,7 +86,7 @@ h2{font-size:clamp(40px,5.4vw,76px);line-height:1.03;letter-spacing:-.045em}
 .nav-indicator.is-on{opacity:1}
 .nav-actions{display:flex;align-items:center;gap:10px;justify-self:end}
 .theme-toggle{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;color:var(--ink)}
-.theme-toggle:hover{background:var(--field)}
+@media(hover:hover){.theme-toggle:hover{background:var(--field)}}
 .theme-toggle .moon{opacity:0;transform:rotate(-40deg) scale(.6);transform-origin:center}
 .theme-toggle .sun,.theme-toggle .rays{transform-origin:12px 12px}
 [data-theme=dark] .theme-toggle .moon{opacity:1;transform:none}
@@ -95,7 +95,7 @@ h2{font-size:clamp(40px,5.4vw,76px);line-height:1.03;letter-spacing:-.045em}
 
 /* Hero. Static: headline over a CSS display. Motion: pinned for 240vh while the display
    turns, rises and fills the viewport (WebGL when available, this CSS model otherwise). */
-.hero{--device-rest:min(64vw,124svh);position:relative;padding-top:var(--header)}
+.hero{--device-rest:min(64vw,124svh,calc((100svh - 220px) * 1.42));position:relative;padding-top:var(--header)}
 .device-sizer{position:absolute;width:var(--device-rest);height:0;visibility:hidden;pointer-events:none}
 .hero-pin{position:relative}
 .hero-copy{position:relative;z-index:3;text-align:center;padding-top:clamp(48px,8vh,96px)}
@@ -120,9 +120,12 @@ h2{font-size:clamp(40px,5.4vw,76px);line-height:1.03;letter-spacing:-.045em}
 .motion .hero-stage{position:absolute;inset:0;padding:0;perspective:1800px}
 .motion .device{position:absolute;z-index:2;left:50%;top:50%;width:var(--device-w,var(--device-rest));margin:0;transform:translate(-50%,-50%) translate3d(var(--dx,0px),var(--dy,0px),0) scale3d(var(--ds,1),var(--ds,1),var(--ds,1)) rotateX(var(--drx,0deg)) rotateY(var(--dry,0deg));transition:opacity .6s ease}
 .motion .hero-stage.is-ready .device{opacity:var(--handoff,0)}
-.motion .hero-stage.is-ready canvas{opacity:calc(1 - var(--handoff,0))}
+.motion .hero-stage.is-ready .device-screen{background:transparent;box-shadow:none}
+.motion .hero-stage.is-settled .device{transition:none}
+/* Without WebGL the CSS stand gives way before the caption arrives. */
+.motion .device-neck,.motion .device-foot{opacity:calc(1 - var(--handoff,0))}
 .motion .hero-stage.is-ready .device-neck,.motion .hero-stage.is-ready .device-foot{visibility:hidden}
-.motion .hero-caption{position:absolute;z-index:4;left:0;right:0;bottom:28px;display:block;padding:0 24px;text-align:center;font-family:var(--display);font-size:clamp(26px,3.2vw,46px);font-weight:600;line-height:1.05;letter-spacing:-.045em;color:var(--ink);opacity:var(--caption,0);transform:translateY(calc((1 - var(--caption,0)) * 24px));pointer-events:none}
+.motion .hero-caption{position:absolute;z-index:4;left:0;right:0;bottom:0;display:block;padding:64px 24px 28px;background:linear-gradient(to top,var(--bg) 62%,transparent);text-align:center;font-family:var(--display);font-size:clamp(26px,3.2vw,46px);font-weight:600;line-height:1.05;letter-spacing:-.045em;color:var(--ink);opacity:var(--caption,0);transform:translateY(calc((1 - var(--caption,0)) * 24px));pointer-events:none}
 .motion .hero-caption span{color:var(--muted)}
 .motion .hero-spot{display:none}
 

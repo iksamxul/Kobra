@@ -21,7 +21,9 @@
 .fb-progress{display:none}
 
 .motion .features{height:var(--fb-h,600vh);padding:0}
-.motion .features-pin{position:sticky;top:0;display:flex;flex-direction:column;justify-content:center;height:100svh;padding-top:var(--header);overflow:clip}
+/* Its pin already clears the header; an anchor jump lands where it pins, not 60px short. */
+.motion #features{scroll-margin-top:calc(var(--header) * -1)}
+.motion .features-pin{position:sticky;top:0;display:flex;flex-direction:column;justify-content:safe center;height:100svh;padding-top:var(--header);overflow:clip}
 .motion .features-head .eyebrow{display:inline-block;margin-right:10px;vertical-align:middle}
 .motion .features-head .badge{margin-top:0;vertical-align:middle}
 .motion .features-head h2{margin-top:12px;font-size:clamp(34px,3.9vw,58px)}
@@ -151,3 +153,23 @@
   .ls-eq small{font-size:9px}
 }
 @media(max-width:380px){.fx-row .fx-chip,.fx-clips .fx-seg+.fx-seg{display:none}}
+
+/* Short screens: the pinned feature bar gives up secondary lines and sizes the screenshot by
+   the height left, so the heading clears the header and the progress line stays in view. */
+@media(max-height:720px) and (min-width:761px){
+  .motion .features-head .eyebrow,.motion .features-head .badge{display:none}
+  .motion .features-head h2{margin-top:0;font-size:clamp(28px,3.4vw,46px)}
+  .motion .fb-points{display:none}
+  .motion .fb-card{padding:22px 30px}
+  .motion .fb-visual{max-width:min(560px,calc((100svh - 330px) * 1.6))}
+}
+@media(max-width:760px) and (max-height:720px){
+  .motion .features-head .eyebrow,.motion .features-head .badge{display:none}
+  .motion .features-head h2{margin-top:0;font-size:28px}
+  .motion .fb-tabs{margin-top:14px}
+  .motion .fb-card{padding:16px}
+  .motion .fb-card h3{margin-top:10px;font-size:22px}
+}
+@media(max-width:760px) and (max-height:600px){.motion .fb-card p{display:none}}
+/* Six icon tabs fit a 320px screen. */
+@media(max-width:380px){.fb-tabs{max-width:100%}.fb-tabs a{flex:1 1 0;min-width:0;padding:0 6px;justify-content:center}}

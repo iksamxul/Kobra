@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { webglAvailable } from './webgl';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
 /** The Kobra mark as a solid object, built from the logo's own 256-unit SVG geometry. */
@@ -17,6 +18,7 @@ const letter = () => polygon([[76, 61], [105, 61], [105, 117], [155, 61], [192, 
 const notch = () => polygon([[121, 120], [149, 128], [121, 137]]);
 
 export async function createEmblem(host: HTMLElement) {
+  if (!webglAvailable()) throw new Error('WebGL is unavailable');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));

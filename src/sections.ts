@@ -18,7 +18,7 @@ function upNext() {
     label.textContent = state === 'played' ? 'Now playing' : 'Cancelled at';
     if (state === 'played') { number.textContent = ''; demo.style.setProperty('--ring', '100'); }
     buttons.play.hidden = buttons.cancel.hidden = true; buttons.replay.hidden = false;
-    status.textContent = state === 'played' ? 'Preview: Big Buck Bunny is playing. Up next moves on to the following video.' : 'Preview: countdown cancelled. The video stays where it ended.';
+    status.textContent = state === 'played' ? 'Now playing Big Buck Bunny' : 'Cancelled · the video stays put';
   };
   const start = () => {
     clearInterval(timer); left = 5;
@@ -68,11 +68,17 @@ function transcript() {
     progress.style.setProperty('--t', String((index + 1) / lines.length));
   };
   lines.forEach((line, index) => line.addEventListener('click', () => { touched = true; clearInterval(timer); select(index); }));
+  const empty = Object.assign(document.createElement('p'), { className: 'transcript-empty', hidden: true });
+  empty.setAttribute('aria-live', 'polite');
+  list.after(empty);
   document.querySelector<HTMLInputElement>('.mini-search input')!.addEventListener('input', event => {
     clearInterval(timer);
     touched = true;
-    const query = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    const raw = (event.target as HTMLInputElement).value.trim(), query = raw.toLowerCase();
     lines.forEach(line => { line.parentElement!.hidden = !!query && !line.textContent!.toLowerCase().includes(query); });
+    const none = !!query && lines.every(line => line.parentElement!.hidden);
+    empty.hidden = !none;
+    empty.textContent = none ? `No line mentions “${raw}”.` : '';
   });
   select(0);
   const seen = new IntersectionObserver(entries => {

@@ -27,7 +27,7 @@
 
 .ed-scene{position:relative;min-width:0;perspective:2200px;perspective-origin:50% 30%}
 .ed-note{position:absolute;right:6px;bottom:-28px;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#6e6e73}
-.ed-window{--fo:var(--focus,0);position:relative;display:flex;flex-direction:column;gap:10px;padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:linear-gradient(160deg,#1d1d20,#141416);box-shadow:0 70px 120px -50px #000,inset 0 1px rgba(255,255,255,.08);transform-style:preserve-3d;transform-origin:50% 80%;transform:rotateX(var(--wrx,0deg)) rotateY(var(--wry,0deg)) scale(calc(var(--ws,1) + var(--fo) * .1));font-size:11px}
+.ed-window{--fo:var(--focus,0);position:relative;display:flex;flex-direction:column;gap:10px;padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:linear-gradient(160deg,#1d1d20,#141416);box-shadow:0 70px 120px -50px #000,inset 0 1px rgba(255,255,255,.08);transform-style:preserve-3d;transform-origin:50% 80%;transform:rotateX(var(--wrx,0deg)) rotateY(calc(var(--wry,0deg) * var(--wrf,1))) scale(calc(var(--ws,1) + var(--fo) * var(--fz,.1)));font-size:11px}
 .ed-bar{display:flex;align-items:center;gap:10px;height:30px;padding:0 4px;color:var(--e-muted);opacity:calc(1 - var(--dim,0) * .75)}
 .ed-dots{display:flex;gap:5px}
 .ed-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.18)}
@@ -57,12 +57,12 @@
 .ed-layer{position:absolute;inset:0;border-radius:6px;transform-style:preserve-3d;box-shadow:0 0 0 1px rgba(255,255,255,calc(var(--ex,0) * .4));background:rgba(255,255,255,calc(var(--ex,0) * .035))}
 .ed-v1{overflow:hidden;background:#000}
 .ed-v1 img{width:100%;height:100%;object-fit:cover}
-.ed-v2{transform:translateZ(calc(var(--ex,0) * 120px))}
+.ed-v2{transform:translateZ(calc(var(--ex,0) * 120px * var(--exd,1)))}
 .ed-pip{position:absolute;right:6%;bottom:8%;width:32%;aspect-ratio:16/9;overflow:hidden;border-radius:5px;box-shadow:0 8px 20px rgba(0,0,0,.5),0 0 0 1.5px rgba(255,255,255,.8)}
 .ed-pip img{width:100%;height:100%;object-fit:cover}
-.ed-text{transform:translateZ(calc(var(--ex,0) * 240px))}
+.ed-text{transform:translateZ(calc(var(--ex,0) * 240px * var(--exd,1)))}
 .ed-title{position:absolute;left:7%;top:12%;font-family:var(--display);font-size:clamp(14px,2.2vw,30px);font-weight:700;letter-spacing:-.04em;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.5)}
-.ed-look{transform:translateZ(calc(var(--ex,0) * 360px));background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.55) 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ed-look{transform:translateZ(calc(var(--ex,0) * 360px * var(--exd,1)));background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.55) 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
 .ed-tag{position:absolute;left:calc(100% + 14px);top:calc(var(--tag-y,0) * 1%);padding:4px 9px;border-radius:99px;background:rgba(28,28,31,.85);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);font-size:10px;font-weight:600;letter-spacing:.06em;white-space:nowrap;color:#f5f5f7;opacity:clamp(0,calc(var(--ex,0) * 2 - 1),1)}
 .ed-tag::before{content:"";position:absolute;right:100%;top:50%;width:14px;height:1px;background:rgba(255,255,255,.4)}
 .ed-v1 .ed-tag{display:none}
@@ -165,4 +165,22 @@
   .ed-ruler{font-size:7.5px}
   .capabilities{grid-template-columns:minmax(0,1fr)}
   .capabilities li{padding:22px 20px}
+}
+
+/* Short screens: the pinned window is sized by the height it has, so it never rises under the
+   header, even at the Cut step's 10% zoom (the window is about 0.77x as tall as wide on
+   desktop, 1.25-1.4x on phones, with the steps below it under 1000px). */
+.motion .ed-scene{width:100%;max-width:calc((100svh - var(--header) - 32px) * 1.115);justify-self:center}
+/* Under 760px tall the Cut step keeps the window still instead of zooming it 10%, which would lift it under the header. */
+@media(max-height:760px){.ed-window{--fz:0}}
+@media(max-width:1000px){.motion .ed-scene{max-width:calc((100svh - var(--header) - 250px) * 1.115);margin-inline:auto}}
+@media(max-width:760px){
+  .motion .ed-scene{max-width:calc((100svh - var(--header) - 242px) * .66)}
+  /* Shallower layers and less turn, so the exploded view stays on a phone screen. */
+  .ed-window{--exd:.3;--wrf:.55}
+}
+@media(max-width:760px) and (max-height:720px){
+  .motion .ed-step p{display:none}
+  .motion .ed-steps{min-height:96px}
+  .motion .ed-scene{max-width:calc((100svh - var(--header) - 150px) * .6)}
 }
