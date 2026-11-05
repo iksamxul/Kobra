@@ -18,3 +18,16 @@ export function themedImages(theme: Theme) {
 
 /** The hero texture: always the 2880 px screen, mipmapped by the GPU. */
 export const heroTexture = (theme: Theme) => `${import.meta.env.BASE_URL}assets/screens/watch-${theme}-2880.webp`;
+
+/** A request dropped by a shaky connection leaves a broken image; try it again twice. */
+export function retryImages() {
+  document.addEventListener('error', event => {
+    const img = event.target;
+    if (!(img instanceof HTMLImageElement) || !img.getAttribute('src')) return;
+    const tries = Number(img.dataset.retry || 0);
+    if (tries >= 2) return;
+    img.dataset.retry = String(tries + 1);
+    const bust = (url: string) => url.replace(/(\.(?:webp|jpe?g|png|svg))(\?r=\d+)?/g, `$1?r=${tries + 1}`);
+    setTimeout(() => { if (img.srcset) img.srcset = bust(img.srcset); img.src = bust(img.getAttribute('src')!); }, 1200 * (tries + 1));
+  }, true);
+}

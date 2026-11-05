@@ -99,6 +99,7 @@ export function renderContent(slot: string): string {
         <p class="section-description">${esc(editor.intro)}</p>`;
     case 'editor-steps': return editor.steps.map((step, i) => `<li class="ed-step${i === 0 ? ' is-active' : ''}" data-step="${i}">${editorShot(step.shot, step.alt, 'ed-step-shot')}<span class="step-index">0${i + 1} · ${esc(step.label)}</span><h3>${esc(step.title)}</h3><p>${esc(step.body)}</p></li>`).join('');
     case 'editor-shots': return [...editor.steps.map(step => [step.shot, step.alt]), ['editor-export', 'The Export sheet: MP4, WebM or GIF, rendered on this computer']].map(([shot, alt], i) => editorShot(shot, alt, `ed-shot${i === 0 ? ' is-active' : ''}`, shot)).join('');
+    case 'editor-breakdown': return `<p class="step-index">${esc(editor.breakdown.label)}</p><h3 id="ed-break-title">${esc(editor.breakdown.title)}</h3><p>${esc(editor.breakdown.body)}</p>`;
     case 'keyframes-copy': return `<h3 id="kf-title">${esc(editor.keyframes.title)}</h3><p>${esc(editor.keyframes.body)}</p>`;
     case 'editor-capabilities': return editor.capabilities.map((item, i) => `<li class="reveal" style="--d:${i % 4}"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">${capabilityIcons[i] || ''}</svg><h4>${esc(item.title)}</h4><p>${esc(item.body)}</p></li>`).join('');
     case 'faq-upcoming': return faq.map(item => `<details><summary>${esc(item.question)}<span aria-hidden="true">+</span></summary><p>${esc(item.answer)}</p></details>`).join('');

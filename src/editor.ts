@@ -1,4 +1,4 @@
-import { clamp, motion, onScroll, range } from './scroll';
+import { clamp, motion, onScroll, range, smooth } from './scroll';
 
 // The Editor sequence: real captures of Kobra Studio's Editor (public/assets/screens/editor-*-dark,
 // 1440x900 windows), driven only by scroll. Each step has beats; a beat names the capture on
@@ -134,4 +134,12 @@ function keyframes() {
   }, { threshold: .6 }).observe(demo);
 }
 
-export function initEditor() { sequence(); keyframes(); }
+// The 3D breakdown: the program monitor's planes separate in depth and stay apart.
+function breakdown() {
+  const block = document.querySelector<HTMLElement>('.ed-break');
+  if (!block) return;
+  const frame = block.querySelector<HTMLElement>('.ed-break-frame')!;
+  onScroll(block, 'pin', p => frame.style.setProperty('--ex', smooth(range(p, .12, .58)).toFixed(4)), { reset: () => frame.style.removeProperty('--ex') });
+}
+
+export function initEditor() { sequence(); breakdown(); keyframes(); }

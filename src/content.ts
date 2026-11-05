@@ -118,6 +118,12 @@ export const editor = {
       alt: 'A 9:16 sequence with the program monitor turned vertical',
     },
   ],
+  // The 3D breakdown after the steps: the program monitor's layers pulled apart in depth.
+  breakdown: {
+    label: 'Inside the program monitor',
+    title: 'Every frame, pulled apart.',
+    body: 'Footage on V1, an overlay on V2, a title above them and a look over everything. Kobra stacks them in that order for the program monitor and for every frame it exports.',
+  },
   keyframes: {
     title: 'Make it move.',
     body: 'Keyframe position, scale, rotation and opacity, then choose how each move eases. Text layers come with animation presets.',

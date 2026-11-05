@@ -163,6 +163,10 @@ test('motion: 3D hero, scroll stories, keyboard, theme persistence and credits',
   await expect(page.locator('.ed-shot[data-shot="editor-export"]')).toHaveClass(/is-active/);
   await expect(page.locator('.ed-shot.is-active')).toHaveJSProperty('complete', true);
   expect(await page.locator('.ed-focus').evaluate(el => parseFloat(getComputedStyle(el).width))).toBeGreaterThan(40);
+  // The 3D breakdown: the program monitor's planes come apart as you scroll.
+  await scrollToProgress(page, '.ed-break', .9);
+  await expect.poll(() => cssVar(page, '.ed-break-frame', '--ex')).toBeGreaterThan(.95);
+  await expect(page.locator('.ed-break .ed-tag').first()).toBeVisible();
   // The download mark becomes a 3D emblem.
   await page.locator('#download').scrollIntoViewIfNeeded();
   await expect(page.locator('#emblem-stage')).toHaveAttribute('data-renderer', 'webgl', { timeout: 20000 });

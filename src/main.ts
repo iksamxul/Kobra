@@ -3,13 +3,15 @@ import './features.css';
 import './sections.css';
 import './editor.css';
 import { release } from './config';
-import { themedImages, type Theme } from './images';
+import { retryImages, themedImages, type Theme } from './images';
 import { initHero } from './hero';
 import { initStory } from './story';
 import { initEditor } from './editor';
 import { initSections } from './sections';
 import { initInteractions } from './interactions';
 import { motion, refresh } from './scroll';
+
+retryImages();
 
 const $ = <T extends Element = HTMLElement>(selector: string) => document.querySelector<T>(selector)!;
 const theme = (): Theme => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
